@@ -1,0 +1,12 @@
+<!-- formulaire de payement-->
+  <form #f ="ngForm" (ngSubmit)="onPayTickets(f.value)">
+    <div class="form-group">
+      <label class = "control-label"> Nom client</label>
+      <input class="form-control" type="text" name="nomClient" ngModel >
+    </div>
+    <div class="form-group">
+      <label class = "control-label"> code payement</label>
+      <input class="form-control" type="text" name="codePayement" ngModel >
+    </div>
+    <button type="submit" class="btn btn-success"> Reserver </button>
+  </form>

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="col-md-3">
+    <h4>liste des villes</h4>
+    <ul *ngIf="villes" class="list-group">
+      <!-- Affichage des villes et selection de la ville courante -->
+      <li [ngClass]="v == currentVille?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable"
+          (click)="OnGetCinema(v)">
+        {{v.name}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <div class="panel-default">
+      <div class="panel-heading"> liste des cinemas</div>
+      <div class="panel-body">
+        <ul *ngIf="cinemas" class="nav nav-pills">
+          <!-- Affichage des cinemas et selection du projection courant -->
+          <li [ngClass]="c == currentCinema? 'active': ''" *ngFor="let c of cinemas" class="clickable">
+            <a (click)="OnGetSalles(c)"> {{c.name}} </a>
+          </li>
+        </ul>
+        <div>
+          <app-salles [cinema]="currentCinema"></app-salles>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

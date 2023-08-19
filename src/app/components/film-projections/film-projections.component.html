@@ -1,0 +1,33 @@
+
+<div class="panel-body" *ngIf="filmProjection" >
+  <div class="row">
+    <div class="col-md-6">
+      <img  class="imgFilm" [src]="imageFilm" alt="Image du film">
+    </div>
+    <div class="col-md-6">
+      <ul class = "list-group">
+        <li class="list-group-item"> Seances</li>
+        <li *ngFor="let ticket of tickets"
+            [ngClass]="selectedProjectionId === filmProjection.id ? 'active' : ''"
+            (click)="getListTickets()" class="list-group-item clickable">
+            {{filmProjection.seance.heureDebut | date : 'HH:mm' }}  | Prix = {{ticket.prix |number : '0.00'}} €
+        </li>
+      </ul>
+      <!--affichage d'une liste de tickets (par numero)-->
+      <div *ngIf="showTicketsList">
+        <button class ="{{getTicketPlace(t)}}"
+                (click)="OnSelectTicket(t)"
+                [disabled]="t.reservee"
+                *ngFor="let t of tickets">
+          {{t.placeId}}
+        </button>
+      </div>
+      <!-- payement tickets-->
+      <div *ngIf="selectedTickets.length > 0">
+        <app-ticket-payment [clientTickets]="selectedTickets" ></app-ticket-payment>
+      </div>
+    </div>
+  </div>
+</div>
+
+

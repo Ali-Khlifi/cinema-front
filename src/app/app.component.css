@@ -1,0 +1,11 @@
+
+.custom-navbar{
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+.custom-logo{
+  height: 50px;
+  position: relative;
+  top: -15px;
+}

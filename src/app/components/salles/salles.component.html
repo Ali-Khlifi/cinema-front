@@ -1,0 +1,16 @@
+
+<div class="row" *ngIf="salles">
+  <div *ngFor="let s of salles">
+    <div class="col-md-6">
+      <div class = "panel panel-default">
+        <div class = "panel-heading">
+          {{s.name}}
+        </div>
+        <div *ngFor="let fp of s.filmProjections">
+          <app-film-projections [filmProjection]="fp"></app-film-projections>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
