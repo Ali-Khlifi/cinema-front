@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { CinemaComponent } from './pages/cinema/cinema.component';
 import {HttpClientModule} from "@angular/common/http";
 import {CinemaService} from "./services/cinema/cinema.service";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { VillesComponent } from './components/villes/villes.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SallesComponent } from './components/salles/salles.component';
@@ -15,6 +15,13 @@ import { FilmsComponent } from './pages/films/films.component';
 import { EvenementsComponent } from './pages/evenements/evenements.component';
 import { OffresComponent } from './pages/offres/offres.component';
 import { TicketPaymentComponent } from './components/ticket-payment/ticket-payment.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SearchBarComponent } from './components/search/search-bar/search-bar.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatInputModule} from "@angular/material/input";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
@@ -27,13 +34,23 @@ import { TicketPaymentComponent } from './components/ticket-payment/ticket-payme
     FilmsComponent,
     EvenementsComponent,
     OffresComponent,
-    TicketPaymentComponent
+    TicketPaymentComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    MatIconModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    BrowserModule
   ],
   providers: [CinemaService],
   bootstrap: [AppComponent]
