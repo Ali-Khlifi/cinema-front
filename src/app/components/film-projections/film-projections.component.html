@@ -7,14 +7,13 @@
     <div class="col-md-6">
       <ul class = "list-group">
         <li class="list-group-item"> Seances</li>
-        <li *ngFor="let ticket of tickets"
-            [ngClass]="selectedProjectionId === filmProjection.id ? 'active' : ''"
-            (click)="getListTickets()" class="list-group-item clickable">
-            {{filmProjection.seance.heureDebut | date : 'HH:mm' }}  | Prix = {{ticket.prix |number : '0.00'}} €
+        <li *ngFor="let seance of seances"
+          (click)="getListSeances()" class="list-group-item clickable">
+           {{seance.heureDebut | date : "HH:mm"}} | Prix = {{seance.prix |number : '0.00'}} €
         </li>
       </ul>
       <!--affichage d'une liste de tickets (par numero)-->
-      <div *ngIf="showTicketsList">
+      <div *ngIf="showSeancesList">
         <button class ="{{getTicketPlace(t)}}"
                 (click)="OnSelectTicket(t)"
                 [disabled]="t.reservee"
