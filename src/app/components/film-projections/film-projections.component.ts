@@ -5,6 +5,8 @@ import {FilmProjection} from "../../models/film-projection.model";
 import {Salle} from "../../models/salle.model";
 import {TicketService} from "../../services/ticket/ticket.service";
 import {Ticket} from "../../models/ticket.model";
+import {Seance} from "../../models/seance.model";
+import {SeanceService} from "../../services/seance/seance.service";
 
 @Component({
   selector: 'app-film-projections',
@@ -21,17 +23,23 @@ export class FilmProjectionsComponent implements OnInit{
   salle!: Salle;
   ticket !: Ticket;
   tickets : Ticket[] = [];
+  seance !: Seance;
+  seances : Seance[] = [];
   selectedTickets : Ticket[] = [];
   selectedProjectionId: number | null = null;
   showTicketsList: boolean = false;
+  showSeancesList: boolean = false;
+
 
 
 
   constructor(private filmProjectionService: FilmProjectionService,
-              private ticketService: TicketService) {
+              private ticketService: TicketService,
+              private seanceService: SeanceService) {
   }
   ngOnInit(): void {
     this.getTicketsByProjection(this.filmProjection.id);
+    this.getSeancesByProjection(this.filmProjection.id);
   }
 
   ngOnChanges(changes: SimpleChanges) : void {
@@ -53,6 +61,13 @@ export class FilmProjectionsComponent implements OnInit{
       this.ticketService.getTicketsByFilmProjection(filmProjectionId)
         .subscribe(tickets => {this.tickets = tickets;
         })
+  }
+  getSeancesByProjection(filmProjectionId: number){
+    filmProjectionId = this.filmProjection.id;
+    this.seanceService.getSeancesByFilmProjection(filmProjectionId)
+      .subscribe(seances => {this.seances = seances;
+        console.log(this.seances)
+      })
   }
 
   OnSelectTicket(t: any) {
@@ -84,7 +99,15 @@ export class FilmProjectionsComponent implements OnInit{
     // Si showTicketsList est true, on le met à false et vice-versa.
     this.showTicketsList = !this.showTicketsList;
     if(this.showTicketsList){
-      this.getTicketsByProjection(this.filmProjection.id)
+      this.getTicketsByProjection(this.filmProjection.id);
     }
+  }
+  getListSeances() {
+    this.showSeancesList = !this.showSeancesList;
+    if(this.showSeancesList){
+      this.getSeancesByProjection(this.filmProjection.id);
+      console.log(this.seances);
+    }
+
   }
 }
