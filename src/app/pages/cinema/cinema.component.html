@@ -1,6 +1,6 @@
 <div class="container">
   <div class="col-md-3">
-    <h4>liste des villes</h4>
+    <h4>Villes</h4>
     <ul *ngIf="villes" class="list-group">
       <!-- Affichage des villes et selection de la ville courante -->
       <li [ngClass]="v == currentVille?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable"
@@ -11,14 +11,14 @@
   </div>
   <div class="col-md-9">
     <div class="panel-default">
-      <div class="panel-heading"> liste des cinemas</div>
+      <div class="panel-heading"> Rechercher une cinema !</div>
       <div class="panel-body">
-        <ul *ngIf="cinemas" class="nav nav-pills">
-          <!-- Affichage des cinemas et selection du projection courant -->
-          <li [ngClass]="c == currentCinema? 'active': ''" *ngFor="let c of cinemas" class="clickable">
+        <div *ngIf="cinemas" class="list-items">
+          <div *ngFor="let c of cinemas" class="clickable">
             <a (click)="OnGetSalles(c)"> {{c.name}} </a>
-          </li>
-        </ul>
+            <p> {{c.nombreSalles}}</p>
+          </div>
+        </div>
         <div>
           <app-salles [cinema]="currentCinema"></app-salles>
         </div>

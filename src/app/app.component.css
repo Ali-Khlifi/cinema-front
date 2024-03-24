@@ -1,11 +1,29 @@
 
 .custom-navbar{
-  height: 50px;
+  height: 8rem;
   display: flex;
   align-items: center;
+  background-color: #001340
 }
 .custom-logo{
-  height: 50px;
+  height: 7.5rem;
   position: relative;
-  top: -15px;
+  margin-top: -3rem;
 }
+
+.navbar-inverse{
+  background-color: #001340
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4rem;
+  margin-top: 1.5rem;
+  background-color: #001340;
+}
+.navbar-inverse .navbar-nav > .active > a {
+  background-color: #001340;
+}
+
