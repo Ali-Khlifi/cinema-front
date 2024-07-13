@@ -22,7 +22,6 @@ export class CinemaService {
     let params = new HttpParams();
     params = params.append('ville', ville);
     return this.http.get<Cinema[]>(this.urlCinemaByVille, { params: params }).pipe(take(1));
-    // return this.http.get(v._links.cinemas.href);
   }
 
   getSalles(c:any) {

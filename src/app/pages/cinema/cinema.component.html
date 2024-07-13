@@ -2,21 +2,24 @@
   <div class="col-md-3">
     <h4>Villes</h4>
     <ul *ngIf="villes" class="list-group">
-      <!-- Affichage des villes et selection de la ville courante -->
+      <!-- Display all villes -->
       <li [ngClass]="v == currentVille?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable"
-          (click)="OnGetCinema(v)">
+        (click)="OnGetCinema(v)">
         {{v.name}}
       </li>
     </ul>
   </div>
   <div class="col-md-9">
     <div class="panel-default">
-      <div class="panel-heading"> Rechercher une cinema !</div>
+      <div class="panel-heading"> Rechercher un cinema </div>
       <div class="panel-body">
         <div *ngIf="cinemas" class="list-items">
-          <div *ngFor="let c of cinemas" class="clickable">
-            <a (click)="OnGetSalles(c)"> {{c.name}} </a>
-            <p> {{c.nombreSalles}}</p>
+          <div *ngFor="let c of cinemas" class="cinema-info">
+            <a class="cinema-name" (click)="OnGetSalles(c)">{{c.name}}</a>
+            <div class="cinema-details">
+              <p class="nb-salle"> {{c.nombreSalles}} salles</p>
+              <p class="cine-adresse">{{c.adresse}}</p>
+            </div>
           </div>
         </div>
         <div>
@@ -26,4 +29,3 @@
     </div>
   </div>
 </div>
-
