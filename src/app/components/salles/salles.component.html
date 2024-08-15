@@ -1,16 +1,28 @@
-
-<div class="row" *ngIf="salles">
-  <div *ngFor="let s of salles">
-    <div class="col-md-6">
-      <div class = "panel panel-default">
-        <div class = "panel-heading">
-          {{s.name}}
-        </div>
-        <div *ngFor="let fp of s.filmProjections">
-          <app-film-projections [filmProjection]="fp"></app-film-projections>
-        </div>
+<div class="container">
+  <div class="col-md-3">
+    <h4>Villes</h4>
+    <ul *ngIf="villes" class="list-group">
+      <li [ngClass]="v.id == currentVilleId?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable">
+        {{v.name}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <div class= "panel-default">
+      <div class ="panel-body">
+        <div *ngIf="salles" class="list-items">
+          <div *ngFor="let s of salles" class="salle-info">
+            <div class ="panel-heading">
+              {{s.name}}
+            </div>
+            <div *ngFor="let fp of s.filmProjections">
+              <app-film-projections [filmProjection]="fp"></app-film-projections>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </div>   
   </div>
+</div>
+  
 
