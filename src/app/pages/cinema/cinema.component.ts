@@ -3,6 +3,7 @@ import { VilleService } from 'src/app/services/ville/ville.service';
 import { CinemaService } from "../../services/cinema/cinema.service";
 import { Ville } from "../../models/ville.model";
 import { Cinema } from 'src/app/models/cinema.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cinema',
@@ -22,8 +23,13 @@ export class CinemaComponent implements OnInit
   tickets: any;
   currentSeance: any;
   public selectedTickets: any[] = [];
-  constructor(public serviceCinema: CinemaService,
-    public villeService: VilleService) { }
+
+  constructor(
+    public serviceCinema: CinemaService,
+    private router: Router,
+    public villeService: VilleService
+  ) { }
+
   ngOnInit()
   {
     this.villeService.getVilles()
@@ -39,13 +45,19 @@ export class CinemaComponent implements OnInit
       .subscribe(data =>
       {
         this.cinemas = data;
-        console.log('*****', data)
       })
   }
   OnGetSalles(c: Cinema)
   {
     this.currentCinema = c;
   }
+
+  OnNavigateToSalles(cinemaId: number)
+  {
+    this.router.navigate(['/salles', cinemaId]);
+  }
+
+
   // OnGetTicketsPlaces(p: any)
   // {
   //   this.currentProject = p;

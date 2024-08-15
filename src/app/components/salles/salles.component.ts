@@ -6,6 +6,7 @@ import {FilmProjectionService} from "../../services/film-projection/film-project
 import {FilmProjection} from "../../models/film-projection.model";
 import {TicketService} from "../../services/ticket/ticket.service";
 import {Ticket} from "../../models/ticket.model";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-salles',
@@ -19,21 +20,32 @@ export class SallesComponent implements OnInit {
 
   filmProjections : FilmProjection[] = [];
   tickets : Ticket[] = [];
+  public cinemaId: number | undefined;
 
-  constructor(private serviceSalle: SalleService,
-              private serviceFilmProjection: FilmProjectionService,
-              private serviceTicket : TicketService){}
+  constructor(
+    private route: ActivatedRoute,
+    private serviceSalle: SalleService,
+    private serviceFilmProjection: FilmProjectionService,
+    private serviceTicket : TicketService
+  ){}
 
+  //ngOnInit(): void {
+  //}
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['cinema']) {
+  //     this.OnGetSalles(this.cinema);
+  //   }
+  // }
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.cinemaId = +params['cinemaId'];
+      this.OnGetSalles(this.cinemaId);
+    });
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['cinema']) {
-      this.OnGetSalles(this.cinema);
-    }
-  }
-  OnGetSalles(c:Cinema) {
-    if(this.cinema){
-      this.serviceSalle.getSalles(c.name)
+
+  OnGetSalles(cinemaId: number) {
+    if(cinemaId){
+      this.serviceSalle.getSallesByCinemaId(cinemaId)
         .subscribe(salles => {
           this.salles = salles
           this.salles.forEach((salle: Salle) => {

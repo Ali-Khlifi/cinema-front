@@ -15,7 +15,7 @@
       <div class="panel-body">
         <div *ngIf="cinemas" class="list-items">
           <div *ngFor="let c of cinemas" class="cinema-info">
-            <a class="cinema-name" (click)="OnGetSalles(c)">{{c.name}}</a>
+            <a class="cinema-name" (click)="OnNavigateToSalles(c.id)">{{c.name}}</a>
             <div class="cinema-details">
               <p class="nb-salle"> {{c.nombreSalles}} salles</p>
               <p class="cine-adresse">{{c.adresse}}</p>
