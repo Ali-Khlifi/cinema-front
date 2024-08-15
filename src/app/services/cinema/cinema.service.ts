@@ -42,4 +42,7 @@ export class CinemaService {
   payerTickets(dataForm: any) {
     return this.http.post(this.host + "/ticketsVendus", dataForm)
   }
+  public getCinemaById(cinemaId: number): Observable<Cinema> {
+    return this.http.get<Cinema>(`${this.urlCinema}/${cinemaId}`).pipe(take(1));
+  }
 }

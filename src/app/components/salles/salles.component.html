@@ -10,6 +10,9 @@
   <div class="col-md-9">
     <div class= "panel-default">
       <div class ="panel-body">
+        <div>
+          <h4 class="current-cinema">{{cinemaName}}</h4>
+        </div>
         <div *ngIf="salles" class="list-items">
           <div *ngFor="let s of salles" class="salle-info">
             <div class ="panel-heading">

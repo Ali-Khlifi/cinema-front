@@ -25,6 +25,7 @@ export class SallesComponent implements OnInit {
   tickets : Ticket[] = [];
   public cinemaId: number | undefined;
   public currentVilleId: number | undefined;
+  public cinemaName: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +48,7 @@ export class SallesComponent implements OnInit {
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
+      this.getCinemaName(this.cinemaId);
     });
   }
 
@@ -78,6 +80,9 @@ export class SallesComponent implements OnInit {
       });
     });
   }
-  
-  
+  getCinemaName(cinemaId: number): void {
+    this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema => {
+      this.cinemaName = cinema.name;
+    });
+  }
 }
