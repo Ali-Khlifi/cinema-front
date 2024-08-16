@@ -10,11 +10,11 @@
     padding: 1rem;
 }
 .list-group-item.active {
-    background-color:#5F9EA0;
+    background-color: #337ab7;
     color: black;
 }
 .current-cinema {
-    background-color: #5F9EA0;
+    background-color: #337ab7;
     color: black;
     border: 1px solid grey;
     padding: 10px;
