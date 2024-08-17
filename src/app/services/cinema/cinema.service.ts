@@ -45,4 +45,7 @@ export class CinemaService {
   public getCinemaById(cinemaId: number): Observable<Cinema> {
     return this.http.get<Cinema>(`${this.urlCinema}/${cinemaId}`).pipe(take(1));
   }
+  public getCinemas(): Observable<Cinema[]> {
+    return this.http.get<Cinema[]>(this.urlCinema).pipe(take(1));
+  }
 }

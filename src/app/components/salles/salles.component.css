@@ -11,11 +11,11 @@
 }
 .list-group-item.active {
     background-color: #337ab7;
-    color: black;
+    color: white;
 }
 .current-cinema {
     background-color: #337ab7;
-    color: black;
+    color: white;
     border: 1px solid grey;
     padding: 10px;
     border-radius: 2px;

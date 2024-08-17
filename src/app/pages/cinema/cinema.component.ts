@@ -34,8 +34,14 @@ export class CinemaComponent implements OnInit
   {
     this.villeService.getVilles()
       .subscribe(villes => this.villes = villes);
+    
+    this.serviceCinema.getCinemas()
+        .subscribe(data => {
+          this.cinemas = data;
+        });
 
     //this.OnGetTicketsPlaces(this.currentProject);
+
   }
   OnGetCinema(ville: Ville)
   {
