@@ -1,22 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {CinemaComponent} from "./pages/cinema/cinema.component";
-import {FilmsComponent} from "./pages/films/films.component";
-import {EvenementsComponent} from "./pages/evenements/evenements.component";
-import {OffresComponent} from "./pages/offres/offres.component";
+import { CinemaComponent } from "./pages/cinema/cinema.component";
+import { FilmsComponent } from "./pages/films/films.component";
+import { EvenementsComponent } from "./pages/evenements/evenements.component";
+import { OffresComponent } from "./pages/offres/offres.component";
+import { SallesComponent } from './components/salles/salles.component';
 
 const routes: Routes = [
   {
-    path : "cinemas", component: CinemaComponent,
+    path: "cinemas", component: CinemaComponent,
   },
   {
-    path : "films", component: FilmsComponent
+    path: "films", component: FilmsComponent
   },
   {
-    path : "evenements", component: EvenementsComponent
+    path: "evenements", component: EvenementsComponent
   },
+  { path: 'salles/:cinemaId', component: SallesComponent },
   {
-    path : "offres", component: OffresComponent
+    path: "offres", component: OffresComponent
   }
 ];
 

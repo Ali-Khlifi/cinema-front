@@ -1,0 +1,23 @@
+.list-items {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px;
+    border-radius: 2px;
+}
+.salle-info {
+    width: 100%;
+    border: 0.1rem solid #ccc;
+    padding: 1rem;
+}
+.list-group-item.active {
+    background-color: #337ab7;
+    color: white;
+}
+.current-cinema {
+    background-color: #337ab7;
+    color: white;
+    border: 1px solid grey;
+    padding: 10px;
+    border-radius: 2px;
+}
+  

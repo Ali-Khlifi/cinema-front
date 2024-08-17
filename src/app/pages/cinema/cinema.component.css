@@ -11,3 +11,27 @@
   width:35px;
   position:relative;
 }
+.list-items {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px;
+}
+
+.cinema-info {
+  width: 30rem; 
+  border: 0.1rem solid #ccc;
+  padding: 1rem;
+}
+.nb-salle {
+  font-weight: bold;
+}
+
+.cinema-name {
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cinema-details {
+  font-size: 1.4rem;
+}

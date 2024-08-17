@@ -6,6 +6,10 @@ import {FilmProjectionService} from "../../services/film-projection/film-project
 import {FilmProjection} from "../../models/film-projection.model";
 import {TicketService} from "../../services/ticket/ticket.service";
 import {Ticket} from "../../models/ticket.model";
+import { ActivatedRoute } from '@angular/router';
+import { VilleService } from 'src/app/services/ville/ville.service';
+import { Ville } from 'src/app/models/ville.model';
+import { CinemaService } from 'src/app/services/cinema/cinema.service';
 
 @Component({
   selector: 'app-salles',
@@ -16,24 +20,41 @@ export class SallesComponent implements OnInit {
 
   @Input() cinema!: Cinema;
   salles : Salle[] = [];
-
+  public villes: Ville[] = [];
   filmProjections : FilmProjection[] = [];
   tickets : Ticket[] = [];
+  public cinemaId: number | undefined;
+  public currentVilleId: number | undefined;
+  public cinemaName: string = '';
 
-  constructor(private serviceSalle: SalleService,
-              private serviceFilmProjection: FilmProjectionService,
-              private serviceTicket : TicketService){}
+  constructor(
+    private route: ActivatedRoute,
+    private serviceSalle: SalleService,
+    private serviceCinema: CinemaService,
+    private serviceFilmProjection: FilmProjectionService,
+    private serviceVille: VilleService,
+    private serviceTicket : TicketService
+  ){}
 
+  //ngOnInit(): void {
+  //}
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['cinema']) {
+  //     this.OnGetSalles(this.cinema);
+  //   }
+  // }
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.cinemaId = +params['cinemaId'];
+      this.OnGetSalles(this.cinemaId);
+      this.OnGetVilles();
+      this.getCinemaName(this.cinemaId);
+    });
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['cinema']) {
-      this.OnGetSalles(this.cinema);
-    }
-  }
-  OnGetSalles(c:Cinema) {
-    if(this.cinema){
-      this.serviceSalle.getSalles(c.name)
+
+  OnGetSalles(cinemaId: number) {
+    if(cinemaId){
+      this.serviceSalle.getSallesByCinemaId(cinemaId)
         .subscribe(salles => {
           this.salles = salles
           this.salles.forEach((salle: Salle) => {
@@ -44,5 +65,24 @@ export class SallesComponent implements OnInit {
           })
         })
     }
+  }
+
+  OnGetVilles() {
+    this.serviceVille.getVilles().subscribe(villes => {
+      this.villes = villes;
+      // find the current ville
+      this.villes.forEach(ville => {
+        this.serviceCinema.getCinema(ville.name).subscribe(cinemas => {
+          if (cinemas.some(cinema => cinema.id === this.cinemaId)) {
+            this.currentVilleId = ville.id;
+          }
+        });
+      });
+    });
+  }
+  getCinemaName(cinemaId: number): void {
+    this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema => {
+      this.cinemaName = cinema.name;
+    });
   }
 }

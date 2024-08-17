@@ -22,7 +22,6 @@ export class CinemaService {
     let params = new HttpParams();
     params = params.append('ville', ville);
     return this.http.get<Cinema[]>(this.urlCinemaByVille, { params: params }).pipe(take(1));
-    // return this.http.get(v._links.cinemas.href);
   }
 
   getSalles(c:any) {
@@ -42,5 +41,11 @@ export class CinemaService {
 
   payerTickets(dataForm: any) {
     return this.http.post(this.host + "/ticketsVendus", dataForm)
+  }
+  public getCinemaById(cinemaId: number): Observable<Cinema> {
+    return this.http.get<Cinema>(`${this.urlCinema}/${cinemaId}`).pipe(take(1));
+  }
+  public getCinemas(): Observable<Cinema[]> {
+    return this.http.get<Cinema[]>(this.urlCinema).pipe(take(1));
   }
 }
