@@ -66,7 +66,6 @@ export class FilmProjectionsComponent implements OnInit{
     filmProjectionId = this.filmProjection.id;
     this.seanceService.getSeancesByFilmProjection(filmProjectionId)
       .subscribe(seances => {this.seances = seances;
-        console.log(this.seances)
       })
   }
 
@@ -106,7 +105,6 @@ export class FilmProjectionsComponent implements OnInit{
     this.showSeancesList = !this.showSeancesList;
     if(this.showSeancesList){
       this.getSeancesByProjection(this.filmProjection.id);
-      console.log(this.seances);
     }
 
   }
