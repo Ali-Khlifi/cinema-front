@@ -5,13 +5,21 @@
       <img  class="imgFilm" [src]="imageFilm" alt="Image du film">
     </div>
     <div class="col-md-6">
-      <ul class = "list-group">
-        <li class="list-group-item"> Seances</li>
-        <li *ngFor="let seance of seances"
-          (click)="getListSeances()" class="list-group-item clickable">
-           {{seance.heureDebut | date : "HH:mm"}} | Prix = {{filmProjection.prix |number : '0.00'}} €
-        </li>
-      </ul>
+      <div class="film-info">
+        <div class="description">
+          <p>Sortie le</p>
+          <p>Film de</p>
+          <p>Synopsis</p>
+        </div>
+        <div class="seances">
+          <ul class = "list-group">
+            <li class="list-group-item"> Seances</li>
+            <li *ngFor="let seance of seances"
+              (click)="getListSeances()" class="list-group-item clickable">
+               {{seance.heureDebut | date : "HH:mm"}} | Prix = {{filmProjection.prix |number : '0.00'}} €
+            </li>
+          </ul>
+        </div>
       <!--affichage d'une liste de tickets (par numero)-->
       <div *ngIf="showSeancesList">
         <button class ="{{getTicketPlace(t)}}"

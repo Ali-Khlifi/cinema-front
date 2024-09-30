@@ -1,10 +1,58 @@
-.clickable {
-  cursor: pointer;
-}
-.imgFilm{
+
+
+/* Image du film */
+.imgFilm {
   width: 100%;
-  border:2px solid black;
-  padding:5px;
+  max-width: 300px; /* Limite la taille maximale de l'image */
+  height: auto;
+  border: 2px solid black;
+  padding: 5px;
+  margin-right: 20px; /* Espace entre l'image et les informations */
+}
+
+/* Boutons des tickets */
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: #f1f1f1;
+  transition: background-color 0.3s ease;
+}
+
+/* Container des informations du film */
+.film-info {
+  display: flex;
+  justify-content: space-between; /* Séparer les deux blocs */
+  align-items: flex-start; /* Alignement en haut */
+}
+
+/* Ajuster la largeur des descriptions et des séances */
+.description {
+  flex: 1;
+  margin-right: 20px; /* Espace entre les deux colonnes */
+}
+
+.seances {
+  flex: 1;
+}
+
+/* Alignement du texte et de la liste */
+.description p {
+  margin-bottom: 10px; /* Espacement entre les paragraphes */
+}
+
+.list-group-item {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #e2e6ea;
 }
 .ticket{
   margin:5px;
@@ -12,9 +60,6 @@
   position:relative;
 }
 
-/*.active {
-  !* Styles pour la séance active (sélectionnée) *!
-  background-color: #f5f2f2; !* exemple de couleur *!
-}*/
+
 
 
