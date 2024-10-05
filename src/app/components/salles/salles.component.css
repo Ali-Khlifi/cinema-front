@@ -20,4 +20,7 @@
     padding: 10px;
     border-radius: 2px;
 }
+.list-group {
+    cursor: pointer;
+}
   

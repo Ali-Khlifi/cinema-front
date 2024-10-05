@@ -11,7 +11,15 @@
     <div class= "panel-default">
       <div class ="panel-body">
         <div>
-          <h4 class="current-cinema">{{cinemaName}}</h4>
+          <h4 class="current-cinema">{{currentCinemaName}}</h4>
+        </div>
+        <!-- list of other cinema int the current ville -->
+        <div class ="rest-of-cinemas">
+          <ul *ngIf="otherCinemasInVille.length > 0" class="list-group">
+            <li *ngFor="let c of otherCinemasInVille" class="list-group-item clickable" (click)="onSelectCinema(c)">
+              {{c.name}}
+            </li>
+          </ul>
         </div>
         <div *ngIf="salles" class="list-items">
           <div *ngFor="let s of salles" class="salle-info">

@@ -25,7 +25,9 @@ export class SallesComponent implements OnInit {
   tickets : Ticket[] = [];
   public cinemaId: number | undefined;
   public currentVilleId: number | undefined;
-  public cinemaName: string = '';
+  public currentCinemaName: string = '';
+  public cinemas: Cinema[] = [];
+  public otherCinemasInVille: Cinema[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -36,19 +38,13 @@ export class SallesComponent implements OnInit {
     private serviceTicket : TicketService
   ){}
 
-  //ngOnInit(): void {
-  //}
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes['cinema']) {
-  //     this.OnGetSalles(this.cinema);
-  //   }
-  // }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
       this.getCinemaName(this.cinemaId);
+      console.log('mes cinema', this.otherCinemasInVille);
     });
   }
 
@@ -70,11 +66,15 @@ export class SallesComponent implements OnInit {
   OnGetVilles() {
     this.serviceVille.getVilles().subscribe(villes => {
       this.villes = villes;
-      // find the current ville
+      // find the current ville and get its cinemas
       this.villes.forEach(ville => {
         this.serviceCinema.getCinema(ville.name).subscribe(cinemas => {
-          if (cinemas.some(cinema => cinema.id === this.cinemaId)) {
+          const currentCinema = cinemas.find(cinema => cinema.id === this.cinemaId);
+          if(currentCinema) {
             this.currentVilleId = ville.id;
+            this.cinemas = cinemas;
+            // Filter out the current cinema from the list of cinemas in the same city
+            this.otherCinemasInVille = cinemas.filter(cinema => cinema.id !== this.cinemaId);
           }
         });
       });
@@ -82,7 +82,13 @@ export class SallesComponent implements OnInit {
   }
   getCinemaName(cinemaId: number): void {
     this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema => {
-      this.cinemaName = cinema.name;
+      this.currentCinemaName = cinema.name;
     });
+  }
+  // When user clicks on a cinema, load its salles and update the cinema info
+  onSelectCinema(cinema: Cinema) {
+    this.cinemaId = cinema.id;
+    this.currentCinemaName = cinema.name;
+    this.OnGetSalles(cinema.id);
   }
 }
