@@ -19,8 +19,16 @@
     border: 1px solid grey;
     padding: 10px;
     border-radius: 2px;
+    display: flex;
+    justify-content: center;
 }
-.list-group {
+.list-group-others-cinemas {
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5rem;
+}
+.cinemas-names {
+    margin-bottom: 1.5rem;
 }
   
