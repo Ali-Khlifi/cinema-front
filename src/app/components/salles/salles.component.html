@@ -14,7 +14,7 @@
           <div>
             <h4 class="current-cinema">{{currentCinemaName}}</h4>
           </div>
-          <!-- list of other cinema int the current ville -->
+          <!-- list of other cinema in the current ville -->
           <div class ="rest-of-cinemas">
             <ul *ngIf="otherCinemasInVille.length > 0" class="list-group-others-cinemas">
               <li *ngFor="let c of otherCinemasInVille" class="list-group-item clickable" (click)="onSelectCinema(c)">

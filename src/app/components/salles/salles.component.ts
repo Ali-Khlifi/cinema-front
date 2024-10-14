@@ -44,7 +44,6 @@ export class SallesComponent implements OnInit {
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
       this.getCinemaName(this.cinemaId);
-      console.log('mes cinema', this.otherCinemasInVille);
     });
   }
 
@@ -75,6 +74,7 @@ export class SallesComponent implements OnInit {
             this.cinemas = cinemas;
             // Filter out the current cinema from the list of cinemas in the same city
             this.otherCinemasInVille = cinemas.filter(cinema => cinema.id !== this.cinemaId);
+            console.log(this.otherCinemasInVille);
           }
         });
       });
@@ -90,5 +90,8 @@ export class SallesComponent implements OnInit {
     this.cinemaId = cinema.id;
     this.currentCinemaName = cinema.name;
     this.OnGetSalles(cinema.id);
+    
+    // update list of others cinemas
+    this.otherCinemasInVille = this.cinemas.filter(c => c.id !== cinema.id);
   }
 }
