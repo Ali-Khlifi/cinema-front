@@ -6,7 +6,7 @@ import {FilmProjectionService} from "../../services/film-projection/film-project
 import {FilmProjection} from "../../models/film-projection.model";
 import {TicketService} from "../../services/ticket/ticket.service";
 import {Ticket} from "../../models/ticket.model";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VilleService } from 'src/app/services/ville/ville.service';
 import { Ville } from 'src/app/models/ville.model';
 import { CinemaService } from 'src/app/services/cinema/cinema.service';
@@ -28,6 +28,7 @@ export class SallesComponent implements OnInit {
   public currentCinemaName: string = '';
   public cinemas: Cinema[] = [];
   public otherCinemasInVille: Cinema[] = [];
+  public currentVille: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +36,8 @@ export class SallesComponent implements OnInit {
     private serviceCinema: CinemaService,
     private serviceFilmProjection: FilmProjectionService,
     private serviceVille: VilleService,
-    private serviceTicket : TicketService
+    private serviceTicket : TicketService,
+    private router: Router,
   ){}
 
   ngOnInit(): void {
@@ -94,4 +96,23 @@ export class SallesComponent implements OnInit {
     // update list of others cinemas
     this.otherCinemasInVille = this.cinemas.filter(c => c.id !== cinema.id);
   }
+  OnGetCinema(ville: Ville)
+  {
+    console.log('je suis ici', this.cinema);
+    this.currentVille = ville;
+    this.salles = []; 
+    this.serviceCinema.getCinema(ville.name)
+      .subscribe(cinemas =>
+      {
+        const currentCinema = cinemas.find(cinema => cinema.id === this.cinemaId);
+        if(currentCinema) {
+          this.onSelectCinema(currentCinema);
+        }
+      })
+
+    this.currentVilleId = ville.id;
+    this.router.navigate(['/salles', this.cinemaId]);
+
+  }
+
 }

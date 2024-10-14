@@ -2,7 +2,8 @@
   <div class="col-md-3">
     <h4>Villes</h4>
     <ul *ngIf="villes" class="list-group">
-      <li [ngClass]="v.id == currentVilleId?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable">
+      <li [ngClass]="v.id == currentVilleId?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable"
+        (click)="OnGetCinema(v)">
         {{v.name}}
       </li>
     </ul>
