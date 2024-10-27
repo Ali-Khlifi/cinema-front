@@ -31,4 +31,7 @@
 .cinemas-names {
     margin-bottom: 1.5rem;
 }
+.clickable {
+    cursor: pointer;
+}
   
