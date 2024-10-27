@@ -80,7 +80,6 @@ export class FilmProjectionsComponent implements OnInit{
       t.selected = false;
       this.selectedTickets.splice(this.selectedTickets.indexOf(t), 1);
     }
-    console.log(this.selectedTickets);
   }
   getTicketPlace(t: any) {
     let str ="btn ticket ";

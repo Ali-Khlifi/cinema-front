@@ -18,7 +18,6 @@ export class VillesComponent implements OnInit {
 
   getVilles(){
     this.villesService.getVilles().subscribe(villes => this.villes = villes);
-    console.log(this.villes)
   }
 
 
