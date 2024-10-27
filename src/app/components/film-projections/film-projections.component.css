@@ -1,20 +1,107 @@
-.clickable {
-  cursor: pointer;
-}
-.imgFilm{
+.col-md-6 {
   width: 100%;
-  border:2px solid black;
-  padding:5px;
-}
-.ticket{
-  margin:5px;
-  width:35px;
-  position:relative;
 }
 
-/*.active {
-  !* Styles pour la séance active (sélectionnée) *!
-  background-color: #f5f2f2; !* exemple de couleur *!
-}*/
+/* Image du film */
+.imgFilm {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border: 2px solid black;
+  padding: 5px;
+  margin-right: 20px; 
+}
+.list-group-proj {
+  white-space: nowrap;
+  overflow-x: auto; 
+}
+
+/* Boutons des tickets */
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: #f1f1f1;
+  transition: background-color 0.3s ease;
+  flex: 1 0 80px;
+}
+.list-tickets {
+  gap: 10px;
+  margin-left: 36px;
+}
+
+/* Container des informations du film */
+.film-info {
+  display: flex;
+  justify-content: space-between; 
+  align-items: flex-start; 
+  gap:20px;
+}
+
+/* Ajuster la largeur des descriptions et des séances */
+.description, .seances {
+  flex: 1;
+}
+
+.description p {
+  margin-bottom: 10px;
+}
+
+/* Alignement du texte et de la liste */
+.description p {
+  margin-bottom: 10px; 
+}
+
+.list-group-item {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #e2e6ea;
+}
+
+.ticket-container {
+  display: block;
+  margin-top: 15px; 
+}
+
+
+button.ticket {
+  flex: 1 0 50px;
+  width: 30px;
+  padding: 5px 10px; /* Espacement interne */
+  
+  border-radius: 4px; /* Bordures arrondies */
+  cursor: pointer;
+  border: 1px solid #449d44;
+  background-color: #449d44;
+  transition: background-color 0.3s ease;
+}
+
+button.ticket:hover {
+  background-color: #e2e6ea;
+}
+
+/* Conteneur de paiement */
+.payment-container {
+  margin-top: 20px; 
+}
+.pay-form {
+  margin-left: 41px;
+}
+
+@media (min-width: 992px) {
+  .col-md-6 {
+    width: 40%;
+  }
+}
+
+
 
 

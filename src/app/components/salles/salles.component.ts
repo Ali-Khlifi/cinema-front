@@ -1,12 +1,12 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-import {Salle} from "../../models/salle.model";
-import {SalleService} from "../../services/salle/salle.service";
-import {Cinema} from "../../models/cinema.model";
-import {FilmProjectionService} from "../../services/film-projection/film-projection.service";
-import {FilmProjection} from "../../models/film-projection.model";
-import {TicketService} from "../../services/ticket/ticket.service";
-import {Ticket} from "../../models/ticket.model";
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Salle } from "../../models/salle.model";
+import { SalleService } from "../../services/salle/salle.service";
+import { Cinema } from "../../models/cinema.model";
+import { FilmProjectionService } from "../../services/film-projection/film-projection.service";
+import { FilmProjection } from "../../models/film-projection.model";
+import { TicketService } from "../../services/ticket/ticket.service";
+import { Ticket } from "../../models/ticket.model";
+import { ActivatedRoute, Router } from '@angular/router';
 import { VilleService } from 'src/app/services/ville/ville.service';
 import { Ville } from 'src/app/models/ville.model';
 import { CinemaService } from 'src/app/services/cinema/cinema.service';
@@ -16,16 +16,20 @@ import { CinemaService } from 'src/app/services/cinema/cinema.service';
   templateUrl: './salles.component.html',
   styleUrls: ['./salles.component.css']
 })
-export class SallesComponent implements OnInit {
+export class SallesComponent implements OnInit
+{
 
   @Input() cinema!: Cinema;
-  salles : Salle[] = [];
+  salles: Salle[] = [];
   public villes: Ville[] = [];
-  filmProjections : FilmProjection[] = [];
-  tickets : Ticket[] = [];
+  filmProjections: FilmProjection[] = [];
+  tickets: Ticket[] = [];
   public cinemaId: number | undefined;
   public currentVilleId: number | undefined;
-  public cinemaName: string = '';
+  public currentCinemaName: string = '';
+  public cinemas: Cinema[] = [];
+  public otherCinemasInVille: Cinema[] = [];
+  public currentVille: Ville | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,18 +37,14 @@ export class SallesComponent implements OnInit {
     private serviceCinema: CinemaService,
     private serviceFilmProjection: FilmProjectionService,
     private serviceVille: VilleService,
-    private serviceTicket : TicketService
-  ){}
+    private serviceTicket: TicketService,
+    private router: Router,
+  ) { }
 
-  //ngOnInit(): void {
-  //}
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes['cinema']) {
-  //     this.OnGetSalles(this.cinema);
-  //   }
-  // }
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
+  ngOnInit(): void
+  {
+    this.route.params.subscribe(params =>
+    {
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
@@ -52,14 +52,18 @@ export class SallesComponent implements OnInit {
     });
   }
 
-  OnGetSalles(cinemaId: number) {
-    if(cinemaId){
+  OnGetSalles(cinemaId: number)
+  {
+    if (cinemaId) {
       this.serviceSalle.getSallesByCinemaId(cinemaId)
-        .subscribe(salles => {
+        .subscribe(salles =>
+        {
           this.salles = salles
-          this.salles.forEach((salle: Salle) => {
+          this.salles.forEach((salle: Salle) =>
+          {
             this.serviceFilmProjection.getFilmProjectionBySalle(salle.id)
-              .subscribe((filmProjections) => {
+              .subscribe((filmProjections) =>
+              {
                 salle.filmProjections = filmProjections;
               })
           })
@@ -67,22 +71,51 @@ export class SallesComponent implements OnInit {
     }
   }
 
-  OnGetVilles() {
-    this.serviceVille.getVilles().subscribe(villes => {
+  OnGetVilles()
+  {
+    this.serviceVille.getVilles().subscribe(villes =>
+    {
       this.villes = villes;
-      // find the current ville
-      this.villes.forEach(ville => {
-        this.serviceCinema.getCinema(ville.name).subscribe(cinemas => {
-          if (cinemas.some(cinema => cinema.id === this.cinemaId)) {
-            this.currentVilleId = ville.id;
-          }
+      // find the current ville and get its cinemas
+      this.villes.forEach(ville =>
+      {
+        this.serviceCinema.getCinema(ville.name).subscribe(cinemas =>
+        {
+          const currentCinema = cinemas.find(cinema => cinema.id === this.cinemaId);
         });
       });
     });
   }
-  getCinemaName(cinemaId: number): void {
-    this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema => {
-      this.cinemaName = cinema.name;
+  getCinemaName(cinemaId: number): void
+  {
+    this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema =>
+    {
+      this.currentCinemaName = cinema.name;
     });
+  }
+  // When user clicks on a cinema, load its salles and update the cinema info
+  onSelectCinema(cinema: Cinema)
+  {
+    this.cinemaId = cinema.id;
+    this.currentCinemaName = cinema.name;
+    this.OnGetSalles(cinema.id);
+
+    // update list of others cinemas
+    this.otherCinemasInVille = this.cinemas.filter(c => c.id !== cinema.id);
+    this.router.navigate(['/salles', cinema.id]);
+  }
+  OnGetCinema(ville: Ville)
+  {
+    this.currentVille = ville;
+    this.salles = [];
+    this.serviceCinema.getCinema(ville.name)
+      .subscribe(cinemas => 
+      {
+        this.cinemas = cinemas;
+        if (this.cinemas.length > 0) {
+          const defaultCinema = this.cinemas[0];
+          this.onSelectCinema(defaultCinema);
+        }
+      })
   }
 }
