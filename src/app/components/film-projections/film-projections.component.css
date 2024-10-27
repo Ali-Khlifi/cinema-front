@@ -29,7 +29,7 @@ button {
 }
 .list-tickets {
   gap: 10px;
-  margin-left: 40px;
+  margin-left: 36px;
 }
 
 /* Container des informations du film */
@@ -73,13 +73,14 @@ button {
 
 
 button.ticket {
-  margin: 5px 0;
-  padding: 5px 10px;
-  width: 35px;
-  border-radius: 5px;
+  flex: 1 0 50px;
+  width: 30px;
+  padding: 5px 10px; /* Espacement interne */
+  
+  border-radius: 4px; /* Bordures arrondies */
   cursor: pointer;
-  border: 1px solid #ddd;
-  background-color: #f1f1f1;
+  border: 1px solid #449d44;
+  background-color: #449d44;
   transition: background-color 0.3s ease;
 }
 
@@ -90,6 +91,9 @@ button.ticket:hover {
 /* Conteneur de paiement */
 .payment-container {
   margin-top: 20px; 
+}
+.pay-form {
+  margin-left: 41px;
 }
 
 @media (min-width: 992px) {
