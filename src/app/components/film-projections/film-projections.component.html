@@ -1,33 +1,30 @@
 <div class="panel-body" *ngIf="filmProjection">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
       <img class="imgFilm" [src]="imageFilm" alt="Image du film">
     </div>
     <div class="col-md-6">
-      <div class="film-info">
-        <div class="description">
-          <p>Sortie le {{ formatDate(filmProjection.film.dateSortie)}}</p>
-          <p>Film de {{filmProjection.film.realisateur}}</p>
-          <p>Synopsis {{filmProjection.film.description}}</p>
+      <div class="film-description">
+        <p><span class="label">Sortie le</span> {{ formatDate(filmProjection.film.dateSortie) }}</p>
+        <p><span class="label">De</span> {{ filmProjection.film.realisateur }}</p>
+        <p><span class="label">Synopsis</span> {{ filmProjection.film.description }}</p>
+      </div>
+      <div class="seances">
+        <ul class="list-group-proj">
+          <li *ngFor="let seance of seances" (click)="getListSeances()" class="list-group-item clickable">
+            {{seance.heureDebut | date : "HH:mm"}} | Prix = {{filmProjection.prix |number : '0.00'}} €
+          </li>
+        </ul>
+        <!--affichage d'une liste de tickets (par numero)-->
+        <div *ngIf="showSeancesList" class="list-tickets">
+          <button class="{{getTicketPlace(t)}}" (click)="OnSelectTicket(t)" [disabled]="t.reservee"
+            *ngFor="let t of tickets">
+            {{t.placeId}}
+          </button>
         </div>
-        <div class="seances">
-          <ul class="list-group-proj">
-            <li class="list-group-item"> Séances</li>
-            <li *ngFor="let seance of seances" (click)="getListSeances()" class="list-group-item clickable">
-              {{seance.heureDebut | date : "HH:mm"}} | Prix = {{filmProjection.prix |number : '0.00'}} €
-            </li>
-          </ul>
-          <!--affichage d'une liste de tickets (par numero)-->
-          <div *ngIf="showSeancesList" class="list-tickets">
-            <button class="{{getTicketPlace(t)}}" (click)="OnSelectTicket(t)" [disabled]="t.reservee"
-              *ngFor="let t of tickets">
-              {{t.placeId}}
-            </button>
-          </div>
-          <!-- payement tickets-->
-          <div *ngIf="selectedTickets.length > 0" class="pay-form">
-            <app-ticket-payment [clientTickets]="selectedTickets"></app-ticket-payment>
-          </div>
+        <!-- payement tickets-->
+        <div *ngIf="selectedTickets.length > 0" class="pay-form">
+          <app-ticket-payment [clientTickets]="selectedTickets"></app-ticket-payment>
         </div>
       </div>
     </div>

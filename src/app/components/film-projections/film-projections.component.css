@@ -1,5 +1,8 @@
 .col-md-6 {
-  width: 100%;
+  display: flex;
+  justify-content: space-between; 
+  align-items: flex-start; 
+  gap:20px;
 }
 
 /* Image du film */
@@ -9,7 +12,6 @@
   height: auto;
   border: 2px solid black;
   padding: 5px;
-  margin-right: 20px; 
 }
 .list-group-proj {
   white-space: nowrap;
@@ -32,27 +34,26 @@ button {
   margin-left: 36px;
 }
 
-/* Container des informations du film */
-.film-info {
+.film-description {
+  padding: 1.5rem; 
+  border-radius: 8px; 
+  flex-direction: column; 
+  gap: 0.8rem;
   display: flex;
-  justify-content: space-between; 
-  align-items: flex-start; 
-  gap:20px;
 }
-
-/* Ajuster la largeur des descriptions et des séances */
-.description, .seances {
-  flex: 1;
+.film-description .label {
+  font-weight: bold; 
+  color: #807b7b; 
+  font-size: 1.5rem;
+  padding: 0%;
+  margin-right: 0.4rem;
 }
 
 .description p {
-  margin-bottom: 10px;
-  background-origin: padding-box;
-}
-
-/* Alignement du texte et de la liste */
-.description p {
-  margin-bottom: 10px; 
+  line-height: 1.1;
+  color: #333; 
+  display: flex;
+  align-items: baseline;
 }
 
 .list-group-item {
@@ -99,7 +100,7 @@ button.ticket:hover {
 
 @media (min-width: 992px) {
   .col-md-6 {
-    width: 40%;
+    width: 60%;
   }
 }
 
