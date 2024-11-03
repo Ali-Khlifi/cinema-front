@@ -7,11 +7,13 @@ import {TicketService} from "../../services/ticket/ticket.service";
 import {Ticket} from "../../models/ticket.model";
 import {Seance} from "../../models/seance.model";
 import {SeanceService} from "../../services/seance/seance.service";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-film-projections',
   templateUrl: './film-projections.component.html',
-  styleUrls: ['./film-projections.component.css']
+  styleUrls: ['./film-projections.component.css'],
+  providers: [DatePipe]
 })
 export class FilmProjectionsComponent implements OnInit{
 
@@ -35,7 +37,8 @@ export class FilmProjectionsComponent implements OnInit{
 
   constructor(private filmProjectionService: FilmProjectionService,
               private ticketService: TicketService,
-              private seanceService: SeanceService) {
+              private seanceService: SeanceService,
+              private datePipe: DatePipe) {
   }
   ngOnInit(): void {
     this.getTicketsByProjection(this.filmProjection.id);
@@ -106,5 +109,8 @@ export class FilmProjectionsComponent implements OnInit{
       this.getSeancesByProjection(this.filmProjection.id);
     }
 
+  }
+  formatDate(dateStr: Date){
+    return this.datePipe.transform(dateStr, 'dd/MM/yyyy');
   }
 }

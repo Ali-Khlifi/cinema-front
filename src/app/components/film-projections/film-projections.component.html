@@ -6,9 +6,9 @@
     <div class="col-md-6">
       <div class="film-info">
         <div class="description">
-          <p>Sortie le</p>
-          <p>Film de</p>
-          <p>Synopsis</p>
+          <p>Sortie le {{ formatDate(filmProjection.film.dateSortie)}}</p>
+          <p>Film de {{filmProjection.film.realisateur}}</p>
+          <p>Synopsis {{filmProjection.film.description}}</p>
         </div>
         <div class="seances">
           <ul class="list-group-proj">

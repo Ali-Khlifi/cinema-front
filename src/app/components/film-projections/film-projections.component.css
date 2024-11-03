@@ -47,6 +47,7 @@ button {
 
 .description p {
   margin-bottom: 10px;
+  background-origin: padding-box;
 }
 
 /* Alignement du texte et de la liste */
