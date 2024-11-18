@@ -48,7 +48,7 @@ export class SallesComponent implements OnInit
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
-      this.getCinemaName(this.cinemaId);
+      // this.getCinemaName(this.cinemaId);
     });
   }
 
@@ -86,13 +86,13 @@ export class SallesComponent implements OnInit
       });
     });
   }
-  getCinemaName(cinemaId: number): void
-  {
-    this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema =>
-    {
-      this.currentCinemaName = cinema.name;
-    });
-  }
+  // getCinemaName(cinemaId: number): void
+  // {
+  //   this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema =>
+  //   {
+  //     this.currentCinemaName = cinema.name;
+  //   });
+  // }
   // When user clicks on a cinema, load its salles and update the cinema info
   onSelectCinema(cinema: Cinema)
   {
