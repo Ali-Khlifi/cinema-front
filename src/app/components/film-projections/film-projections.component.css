@@ -13,25 +13,82 @@
   border: 2px solid black;
   padding: 5px;
 }
-.list-group-proj {
-  white-space: nowrap;
-  overflow-x: auto; 
+.seances {
+  margin-left: 2rem;
+  width: 100%; 
+  max-width: 800px; 
+  padding: 1rem;
+}
+.seances .list-group-proj {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; 
+  padding: 0;
+  list-style: none; 
+}
+.list-group-item {
+  flex: 1 1 calc(40% - 1rem); 
+  max-width: calc(40% - 1rem); 
+  height: auto; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  border: 1.5px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #eaeaea;
+  transform: scale(1.05);
+}
+
+.pay-form {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+}
+.seance-heure {
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  margin-bottom: 0.5rem;
+}
+
+.seance-prix {
+  font-size: 1.3rem; 
+  color: #666; 
 }
 
 /* Boutons des tickets */
-button {
-  margin: 5px;
-  padding: 5px 10px;
+.list-tickets button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #ddd;
-  background-color: #f1f1f1;
   transition: background-color 0.3s ease;
-  flex: 1 0 80px;
 }
 .list-tickets {
-  gap: 10px;
-  margin-left: 36px;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.list-tickets button.available {
+  background-color: #f9f9f9;
+}
+
+.list-tickets button.reserved {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.list-tickets button:hover:not([disabled]) {
+  background-color: #cce7ff;
 }
 
 .film-description {
@@ -73,29 +130,9 @@ button {
   margin-top: 15px; 
 }
 
-
-button.ticket {
-  flex: 1 0 50px;
-  width: 30px;
-  padding: 5px 10px; /* Espacement interne */
-  
-  border-radius: 4px; /* Bordures arrondies */
-  cursor: pointer;
-  border: 1px solid #449d44;
-  background-color: #449d44;
-  transition: background-color 0.3s ease;
-}
-
-button.ticket:hover {
-  background-color: #e2e6ea;
-}
-
 /* Conteneur de paiement */
 .payment-container {
   margin-top: 20px; 
-}
-.pay-form {
-  margin-left: 41px;
 }
 
 @media (min-width: 992px) {

@@ -12,7 +12,12 @@
       <div class="seances">
         <ul class="list-group-proj">
           <li *ngFor="let seance of seances" (click)="getListSeances()" class="list-group-item clickable">
-            {{seance.heureDebut | date : "HH:mm"}} | Prix = {{filmProjection.prix |number : '0.00'}} €
+            <div class="seance-heure">
+              {{ seance.heureDebut | date: "HH:mm" }}
+            </div>
+            <div class="seance-prix">
+              {{ filmProjection.prix | number: '0.00' }} €
+            </div>
           </li>
         </ul>
         <!--affichage d'une liste de tickets (par numero)-->
