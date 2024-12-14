@@ -1,24 +1,23 @@
 <div class="container">
   <div class="col-md-3">
-    <h4>Villes</h4>
-    <ul *ngIf="villes" class="list-group">
-      <li [ngClass]="v.id == currentVilleId?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable"
+    <ul *ngIf="villes" class="list-group-villes">
+      <li [ngClass]="v.id == currentVilleId?'active' : ''" *ngFor="let v of villes" class="list-group-item-villes"
         (click)="OnGetCinema(v)">
         {{v.name}}
       </li>
     </ul>
   </div>
   <div class="col-md-9">
-    <div class= "panel-default">
-      <div class ="panel-body">
+    <div class="panel-default">
+      <div class="panel-body">
         <div class="cinemas-names">
           <div>
             <h4 class="current-cinema">{{currentCinemaName}}</h4>
           </div>
           <!-- list of other cinema in the current ville -->
-          <div class ="rest-of-cinemas">
+          <div class="rest-of-cinemas">
             <ul *ngIf="otherCinemasInVille.length > 0" class="list-group-others-cinemas">
-              <li *ngFor="let c of otherCinemasInVille" class="list-group-item clickable" (click)="onSelectCinema(c)">
+              <li *ngFor="let c of otherCinemasInVille" class="list-others-cinemas-item " (click)="onSelectCinema(c)">
                 {{c.name}}
               </li>
             </ul>
@@ -26,7 +25,7 @@
         </div>
         <div *ngIf="salles" class="list-items">
           <div *ngFor="let s of salles" class="salle-info">
-            <div class ="panel-heading">
+            <div class="panel-heading">
               {{s.name}}
             </div>
             <div *ngFor="let fp of s.filmProjections">
@@ -35,8 +34,6 @@
           </div>
         </div>
       </div>
-    </div>   
+    </div>
   </div>
 </div>
-  
-

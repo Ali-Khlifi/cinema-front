@@ -48,7 +48,6 @@ export class SallesComponent implements OnInit
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
-      this.getCinemaName(this.cinemaId);
     });
   }
 
@@ -84,13 +83,6 @@ export class SallesComponent implements OnInit
           const currentCinema = cinemas.find(cinema => cinema.id === this.cinemaId);
         });
       });
-    });
-  }
-  getCinemaName(cinemaId: number): void
-  {
-    this.serviceCinema.getCinemaById(cinemaId).subscribe(cinema =>
-    {
-      this.currentCinemaName = cinema.name;
     });
   }
   // When user clicks on a cinema, load its salles and update the cinema info

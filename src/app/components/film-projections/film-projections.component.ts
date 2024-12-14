@@ -7,17 +7,19 @@ import {TicketService} from "../../services/ticket/ticket.service";
 import {Ticket} from "../../models/ticket.model";
 import {Seance} from "../../models/seance.model";
 import {SeanceService} from "../../services/seance/seance.service";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-film-projections',
   templateUrl: './film-projections.component.html',
-  styleUrls: ['./film-projections.component.css']
+  styleUrls: ['./film-projections.component.css'],
+  providers: [DatePipe]
 })
 export class FilmProjectionsComponent implements OnInit{
 
   @Input() filmProjection !: FilmProjection;
 
-  imageFilm!:any;
+  mediaFilm!:any;
 
   salleId!: number;
   salle!: Salle;
@@ -35,7 +37,8 @@ export class FilmProjectionsComponent implements OnInit{
 
   constructor(private filmProjectionService: FilmProjectionService,
               private ticketService: TicketService,
-              private seanceService: SeanceService) {
+              private seanceService: SeanceService,
+              private datePipe: DatePipe) {
   }
   ngOnInit(): void {
     this.getTicketsByProjection(this.filmProjection.id);
@@ -44,11 +47,11 @@ export class FilmProjectionsComponent implements OnInit{
 
   ngOnChanges(changes: SimpleChanges) : void {
     if (changes['filmProjection'] && this.filmProjection.film.id){
-      this.filmProjectionService.getImageByFilm(this.filmProjection.film.id).subscribe(data => {
+      this.filmProjectionService.getMediaFilm(this.filmProjection.film.id).subscribe(data => {
         let read = new FileReader();
         read.readAsDataURL(data);
         read.onloadend = () => {
-          this.imageFilm = read.result;
+          this.mediaFilm = read.result;
         }
       }, error => {
         console.log(error);
@@ -106,5 +109,8 @@ export class FilmProjectionsComponent implements OnInit{
       this.getSeancesByProjection(this.filmProjection.id);
     }
 
+  }
+  formatDate(dateStr: Date){
+    return this.datePipe.transform(dateStr, 'dd/MM/yyyy');
   }
 }

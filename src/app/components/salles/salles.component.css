@@ -1,18 +1,60 @@
 .list-items {
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     gap: 15px;
     border-radius: 2px;
 }
+
 .salle-info {
     width: 100%;
     border: 0.1rem solid #ccc;
     padding: 1rem;
 }
+
+.panel-heading {
+    background-color: #e2e6ea;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 21.5%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-left: 1.3rem;
+    margin-block: 0.4rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+}
+.col-md-3 {
+    margin-top: 5.1rem;
+}
+
+.list-group-villes {
+   
+}
+
+.list-group-item-villes {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    margin: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.list-group-item-villes:hover {
+    background-color: #e2e6ea;
+    transform: scale(1.02);
+}
+
 .list-group-item.active {
     background-color: #337ab7;
     color: white;
 }
+
 .current-cinema {
     background-color: #337ab7;
     color: white;
@@ -22,16 +64,38 @@
     display: flex;
     justify-content: center;
 }
+
 .list-group-others-cinemas {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    margin-right: 5rem;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
 }
+
+.list-others-cinemas-item {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.list-others-cinemas-item:hover {
+    background-color: #e2e6ea;
+    transform: scale(1.05);
+}
+
 .cinemas-names {
     margin-bottom: 1.5rem;
 }
+
 .clickable {
     cursor: pointer;
 }
-  
