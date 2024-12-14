@@ -9,6 +9,18 @@
     border: 0.1rem solid #ccc;
     padding: 1rem;
 }
+.panel-heading {
+    background-color: #e2e6ea;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    width: 22%; 
+    padding: 10px; 
+    border-radius: 4px; 
+    border: 1px solid #ddd;
+    margin-left: 1rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+}
 .list-group-item.active {
     background-color: #337ab7;
     color: white;
