@@ -12,13 +12,12 @@ export class FilmProjectionService {
   constructor(private http: HttpClient) { }
 
   urlApi = environment.API_URL;
-  urlImageFilm = this.urlApi + "/imageFilm"
-
   urlFilmProjection = this.urlApi + "/filmProjection/bySalle"
 
 
-  public getImageByFilm(filmId: number){
-    return this.http.get(this.urlImageFilm + "/" + filmId, {responseType: 'blob'})
+  public getMediaFilm(filmId: number){
+    const urlMediaFilm = `${this.urlApi}/films/${filmId}/media`;
+    return this.http.get(urlMediaFilm, {responseType: 'blob'})
   }
 
   public getFilmProjectionBySalle(salleId: number){

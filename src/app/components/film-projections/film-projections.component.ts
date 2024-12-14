@@ -19,7 +19,7 @@ export class FilmProjectionsComponent implements OnInit{
 
   @Input() filmProjection !: FilmProjection;
 
-  imageFilm!:any;
+  mediaFilm!:any;
 
   salleId!: number;
   salle!: Salle;
@@ -47,11 +47,11 @@ export class FilmProjectionsComponent implements OnInit{
 
   ngOnChanges(changes: SimpleChanges) : void {
     if (changes['filmProjection'] && this.filmProjection.film.id){
-      this.filmProjectionService.getImageByFilm(this.filmProjection.film.id).subscribe(data => {
+      this.filmProjectionService.getMediaFilm(this.filmProjection.film.id).subscribe(data => {
         let read = new FileReader();
         read.readAsDataURL(data);
         read.onloadend = () => {
-          this.imageFilm = read.result;
+          this.mediaFilm = read.result;
         }
       }, error => {
         console.log(error);
