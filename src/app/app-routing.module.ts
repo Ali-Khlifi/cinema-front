@@ -5,10 +5,11 @@ import { FilmsComponent } from "./pages/films/films.component";
 import { EvenementsComponent } from "./pages/evenements/evenements.component";
 import { OffresComponent } from "./pages/offres/offres.component";
 import { SallesComponent } from './components/salles/salles.component';
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   {
-    path: "cinemas", component: CinemaComponent,
+    path: "cinemas", component: CinemaComponent, canActivate:[AuthGuard], data : { roles:['USER'] }
   },
   {
     path: "films", component: FilmsComponent

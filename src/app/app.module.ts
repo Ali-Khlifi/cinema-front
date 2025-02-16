@@ -1,6 +1,4 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CinemaComponent } from './pages/cinema/cinema.component';
@@ -15,6 +13,32 @@ import { FilmsComponent } from './pages/films/films.component';
 import { EvenementsComponent } from './pages/evenements/evenements.component';
 import { OffresComponent } from './pages/offres/offres.component';
 import { TicketPaymentComponent } from './components/ticket-payment/ticket-payment.component';
+
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+
+
+/**
+ * function to initialize keycloak (keycloak-angular) with keycloak Adapter
+ * @param keycloak 
+ * @returns 
+ */
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8088',
+        realm: 'cinemas-app',
+        clientId: 'cinemas-app-client'
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        checkLoginIframe : false,
+        silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
+      }
+    });
+}
 
 @NgModule({
   declarations: [
@@ -33,9 +57,12 @@ import { TicketPaymentComponent } from './components/ticket-payment/ticket-payme
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    KeycloakAngularModule
   ],
-  providers: [CinemaService],
+  providers: [CinemaService, 
+    {provide : APP_INITIALIZER, deps : [KeycloakService],useFactory : initializeKeycloak, multi : true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
