@@ -16,7 +16,7 @@ export class CinemaService {
   urlCinema = this.urlApi + "/cinema"
   urlCinemaByVille = this.urlApi + "/cinema/byVille"
 
-  public host : String = "http://localhost:8080"
+  public host : String = "http://localhost:8082"
 
   public getCinema(ville: string) : Observable<Cinema[]>{
     let params = new HttpParams();
