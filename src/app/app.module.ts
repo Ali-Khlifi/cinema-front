@@ -41,6 +41,7 @@ export const initializeKeycloak = (keycloak: KeycloakService) => async () => {
         }
       },
     });
+    console.log('je suis ici');
 
     const keycloakInit = await keycloak.init({
       config: {
@@ -48,16 +49,13 @@ export const initializeKeycloak = (keycloak: KeycloakService) => async () => {
         realm: environment.keycloak?.realm ?? '',
         clientId: environment.keycloak?.clientId ?? '',
       },
-      loadUserProfileAtStartUp: true,
       initOptions: {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
         checkLoginIframe: false,
-        redirectUri: environment.keycloak?.redirectUri ?? '',
       },
       bearerExcludedUrls: ['/assets'],
     });
-
     console.log('✅ Keycloak initialisé avec succès:', keycloakInit);
     return keycloakInit;
   } catch (error) {
