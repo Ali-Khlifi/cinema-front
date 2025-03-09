@@ -7,9 +7,10 @@ import { OffresComponent } from "./pages/offres/offres.component";
 import { SallesComponent } from './components/salles/salles.component';
 import {AuthGuard} from "./guards/auth.guard";
 
+
 const routes: Routes = [
   {
-    path: "cinemas", component: CinemaComponent, canActivate:[AuthGuard], data : { roles:['USER'] }
+    path: "cinemas", component: CinemaComponent, canActivate:[AuthGuard], data : { roles:['ADMIN'] } // ajout de canActivate:[AuthGuard]  --> appel keycloak
   },
   {
     path: "films", component: FilmsComponent

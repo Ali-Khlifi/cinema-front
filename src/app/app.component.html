@@ -10,6 +10,23 @@
       <li class="active"><a routerLink="/films" >FILMS</a>
       <li class="active"><a routerLink="/evenements" >ÉVÉNEMENTS</a></li>
       <li class="active"><a routerLink="/offres" >OFFRES</a></li>
+      <ng-container *ngIf="isLoggedIn(); else loginLink">
+        <li class="nav-item">
+          <span class="nav-link text-light">Hi {{ securityService.profile?.username }} !</span>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-outline-light" (click)="logout()">
+            Logout
+          </button>
+        </li>
+      </ng-container>
+      <ng-template #loginLink>
+        <li class="nav-item">
+          <button class="btn btn-outline-light" (click)="login()">
+            Login
+          </button>
+        </li>
+      </ng-template>
     </ul>
   </div>
 </nav>
