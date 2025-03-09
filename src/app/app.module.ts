@@ -24,22 +24,6 @@ import {environment} from '../environments/environment';
  * @param keycloak 
  * @returns 
  */
-
-// function initializeKeycloak(keycloak: KeycloakService) {
-//   return () =>
-//     keycloak.init({
-//       config: {
-//         url: 'http://localhost:8088',
-//         realm: 'cinemas-app',
-//         clientId: 'cinemas-app-client'
-//       },
-//       initOptions: {
-//         onLoad: 'check-sso',
-//         checkLoginIframe : false,
-//         silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
-//       }
-//     });
-// }
 export const initializeKeycloak = (keycloak: KeycloakService) => async () => {
   console.log('🟢 Démarrage de l\'initialisation Keycloak...');
 
