@@ -14,12 +14,12 @@ export class AppComponent {
 
   constructor(private keycloakService: KeycloakService) {}
 
-  async ngOnInit() {
-    this.isAuthenticated = await this.keycloakService.isAuthenticated();
-    if (this.isAuthenticated) {
-      this.userProfile = this.keycloakService.profile;
-    }
-  }
+  // async ngOnInit() {
+  //   this.isAuthenticated = await this.keycloakService.isAuthenticated();
+  //   if (this.isAuthenticated) {
+  //     this.userProfile = this.keycloakService.profile;
+  //   }
+  // }
 
   login() {
     this.keycloakService.login();

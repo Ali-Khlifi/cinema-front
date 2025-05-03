@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
 import {UserProfile} from './user-profile';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,34 +28,39 @@ export class KeycloakService {
     try {
       console.log('authenticating user...');
       const authenticated = await this.keycloak.init({
-        onLoad: 'login-required',
-        checkLoginIframe: false,
-        redirectUri: window.location.origin
+        onLoad: environment.keycloak.initOptions.onLoad as Keycloak.KeycloakOnLoad,
+        silentCheckSsoRedirectUri:
+        window.location.origin + "/assets/silent-check-sso.html",
+        
       });
-  
-      if (authenticated) {
-        console.log('authenticated ok...');
+      console.log('je suis ici');
+
+      if (!authenticated) {
+        console.log('je suis ici!!!!!!!!!');
+
+          return authenticated;
+      }
         this._profile = await this.keycloak.loadUserProfile() as UserProfile;
         this._profile.token = this.keycloak.token || '';
-      } else {
-        console.warn('User not authenticated');
-      }
+      
+      return true;
     } catch (e) {
       console.error('Keycloak init error:', e);
+      return false;
     }
   }
 
-async isAuthenticated(): Promise<boolean> {
-  try {
-    if (!this._keycloak) {
-      return false;
-    }
-    return await this._keycloak.init({ onLoad: 'check-sso' });
-  } catch (error) {
-    console.error('Authentication check failed', error);
-    return false;
-  }
-}
+// async isAuthenticated(): Promise<boolean> {
+//   try {
+//     if (!this._keycloak) {
+//       return false;
+//     }
+//     return await this._keycloak.init({ onLoad: 'check-sso' });
+//   } catch (error) {
+//     console.error('Authentication check failed', error);
+//     return false;
+//   }
+// }
 
   login() {
     return this.keycloak.login();
