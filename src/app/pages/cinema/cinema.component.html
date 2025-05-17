@@ -1,6 +1,5 @@
 <div class="container">
   <div class="col-md-3">
-    <h4>Villes</h4>
     <ul *ngIf="villes" class="list-group">
       <!-- Display all villes -->
       <li [ngClass]="v == currentVille?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable"
