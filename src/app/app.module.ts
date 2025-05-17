@@ -15,6 +15,7 @@ import { FilmsComponent } from './pages/films/films.component';
 import { EvenementsComponent } from './pages/evenements/evenements.component';
 import { OffresComponent } from './pages/offres/offres.component';
 import { TicketPaymentComponent } from './components/ticket-payment/ticket-payment.component';
+import { CinemaSearchComponent } from './components/search/cinema-search/cinema-search.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TicketPaymentComponent } from './components/ticket-payment/ticket-payme
     FilmsComponent,
     EvenementsComponent,
     OffresComponent,
-    TicketPaymentComponent
+    TicketPaymentComponent,
+    CinemaSearchComponent
   ],
   imports: [
     BrowserModule,
