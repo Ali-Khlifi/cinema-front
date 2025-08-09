@@ -16,6 +16,8 @@ import { EvenementsComponent } from './pages/evenements/evenements.component';
 import { OffresComponent } from './pages/offres/offres.component';
 import { TicketPaymentComponent } from './components/ticket-payment/ticket-payment.component';
 import { CinemaSearchComponent } from './components/search/cinema-search/cinema-search.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { KeycloakInterceptor } from './services/security/keycloak.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,11 @@ import { CinemaSearchComponent } from './components/search/cinema-search/cinema-
     HttpClientModule,
     FormsModule
   ],
-  providers: [CinemaService],
+  providers: [
+    CinemaService,
+    { provide: HTTP_INTERCEPTORS, useClass: KeycloakInterceptor, multi: true }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
