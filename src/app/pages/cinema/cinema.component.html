@@ -1,6 +1,5 @@
 <div class="container">
   <div class="col-md-3">
-    <h4>Villes</h4>
     <ul *ngIf="villes" class="list-group">
       <!-- Display all villes -->
       <li [ngClass]="v == currentVille?'active' : ''" *ngFor="let v of villes" class="list-group-item clickable"
@@ -11,10 +10,15 @@
   </div>
   <div class="col-md-9">
     <div class="panel-default">
-      <div class="panel-heading"> Rechercher un cinema </div>
+      <div class="panel-heading">
+        <app-cinema-search 
+          [searchTerm]="searchTerm"
+          (searchTermChange)="onSearchTermChanged($event)"
+        ></app-cinema-search>
+      </div>
       <div class="panel-body">
-        <div *ngIf="cinemas" class="list-items">
-          <div *ngFor="let c of cinemas" class="cinema-info">
+        <div *ngIf="filteredCinemas" class="list-items">
+          <div *ngFor="let c of filteredCinemas" class="cinema-info">
             <a class="cinema-name" (click)="OnNavigateToSalles(c.id)">{{c.name}}</a>
             <div class="cinema-details">
               <p class="nb-salle"> {{c.nombreSalles}} salles</p>

@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-cinema',
   templateUrl: './cinema.component.html',
-  styleUrls: ['./cinema.component.css']
+  styleUrls: ['./cinema.component.css'],
+  standalone: false
 })
 export class CinemaComponent implements OnInit
 {
@@ -23,6 +24,8 @@ export class CinemaComponent implements OnInit
   tickets: any;
   currentSeance: any;
   public selectedTickets: any[] = [];
+  public filteredCinemas: Cinema[] = [];
+  searchTerm: string = '';
 
   constructor(
     public serviceCinema: CinemaService,
@@ -38,6 +41,7 @@ export class CinemaComponent implements OnInit
     this.serviceCinema.getCinemas()
         .subscribe(data => {
           this.cinemas = data;
+          this.filteredCinemas = [...data];
         });
 
     //this.OnGetTicketsPlaces(this.currentProject);
@@ -46,11 +50,13 @@ export class CinemaComponent implements OnInit
   OnGetCinema(ville: Ville)
   {
     this.currentVille = ville;
-    this.salles = undefined;  // vider la liste des salles
+    this.salles = undefined; 
     this.serviceCinema.getCinema(ville.name)
-      .subscribe(data =>
+      .subscribe((data: Cinema[]) =>
       {
         this.cinemas = data;
+        this.filteredCinemas = [...data];
+        this.searchTerm = '';
       })
   }
   OnGetSalles(c: Cinema)
@@ -61,6 +67,23 @@ export class CinemaComponent implements OnInit
   OnNavigateToSalles(cinemaId: number)
   {
     this.router.navigate(['/salles', cinemaId]);
+  }
+
+  handleSearch(searchTerm: string) {
+    console.log('Search term:', searchTerm);
+    if (!searchTerm || searchTerm.trim() === '') {
+      this.filteredCinemas = [...this.cinemas];
+      return;
+    }
+    const term = searchTerm.toLowerCase();
+    this.filteredCinemas = this.cinemas.filter(c => 
+      c.name.toLowerCase().includes(term) || 
+      (c.adresse && c.adresse.toLowerCase().includes(term))
+    );
+  }
+  onSearchTermChanged(newValue: string) {
+    this.searchTerm = newValue;
+    this.handleSearch(newValue);
   }
 
 

@@ -35,3 +35,9 @@
 .cinema-details {
   font-size: 1.4rem;
 }
+@media (min-width: 992px) {
+  .col-md-3 {
+    width: 25%;
+    margin-top: 5.8rem;
+  }
+}
