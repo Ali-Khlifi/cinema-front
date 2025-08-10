@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,23 @@ import { TicketPaymentComponent } from './components/ticket-payment/ticket-payme
 import { CinemaSearchComponent } from './components/search/cinema-search/cinema-search.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KeycloakInterceptor } from './services/security/keycloak.interceptor';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8088',
+        realm: 'cinemas-app',
+        clientId: 'cinemas-app-client'
+      },
+      initOptions: {
+        onLoad: 'login-required'
+      }
+    });
+}
+
 
 @NgModule({
   declarations: [
@@ -37,11 +54,17 @@ import { KeycloakInterceptor } from './services/security/keycloak.interceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    KeycloakAngularModule
   ],
   providers: [
     CinemaService,
-    { provide: HTTP_INTERCEPTORS, useClass: KeycloakInterceptor, multi: true }
+        {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    }
 
   ],
   bootstrap: [AppComponent]
