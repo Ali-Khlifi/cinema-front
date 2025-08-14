@@ -30,8 +30,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: 'cinemas-app-client'
       },
       initOptions: {
-        onLoad: 'login-required'
-      }
+        onLoad: 'login-required',
+        checkLoginIframe: false
+      },
+      enableBearerInterceptor: false
     });
 }
 
@@ -69,7 +71,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       provide: HTTP_INTERCEPTORS,
       useClass: KeycloakInterceptor,
       multi: true
-    }
+    },
+    KeycloakService
 
   ],
   bootstrap: [AppComponent]
