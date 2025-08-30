@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, catchError } from 'rxjs/operators';
 import { KeycloakService } from 'keycloak-angular';
 
 @Injectable()
@@ -10,8 +10,9 @@ export class KeycloakInterceptor implements HttpInterceptor {
   constructor(private keycloak: KeycloakService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Exclure les requêtes vers Keycloak elle-même
-    if (req.url.includes('keycloak') || req.url.includes('assets')) {
+    // Exclure les requêtes vers Keycloak et les assets
+    if (req.url.includes('keycloak') || req.url.includes('assets') ||
+      req.url.includes('http://localhost:8088')) {
       return next.handle(req);
     }
 
@@ -24,11 +25,17 @@ export class KeycloakInterceptor implements HttpInterceptor {
               'Content-Type': 'application/json'
             }
           });
-          console.log('Token ajouté à la requête vers:', req.url); // Debug
           return next.handle(authReq);
         }
-        console.warn('Aucun token disponible pour:', req.url); // Debug
         return next.handle(req);
+      }),
+      catchError(error => {
+        // Gérer les erreurs d'authentification
+        if (error.status === 401 || error.status === 403) {
+          console.warn('Token expiré ou invalide, tentative de rafraîchissement...');
+          this.keycloak.login();
+        }
+        throw error;
       })
     );
   }

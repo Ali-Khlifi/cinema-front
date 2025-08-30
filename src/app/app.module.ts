@@ -30,10 +30,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: 'cinemas-app-client'
       },
       initOptions: {
-        onLoad: 'login-required',
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
         checkLoginIframe: false
       },
-      enableBearerInterceptor: false
+      enableBearerInterceptor: false,
+      bearerExcludedUrls: ['/assets', '/keycloak']
     });
 }
 
