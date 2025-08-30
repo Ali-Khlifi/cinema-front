@@ -27,3 +27,27 @@
   background-color: #001340;
 }
 
+.navbar-btn {
+  color: #fff !important;
+  margin: 8px 0;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  padding: 6px 12px;
+  text-decoration: none !important;
+}
+
+.navbar-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none !important;
+}
+
+.navbar-right {
+  margin-right: 0;
+  padding-right: 15px;
+}
+
+.navbar-btn, .navbar-btn:hover, .navbar-btn:focus {
+  text-decoration: none !important;
+  outline: none !important;
+}
+

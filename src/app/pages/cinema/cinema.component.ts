@@ -37,7 +37,7 @@ export class CinemaComponent implements OnInit
   {
     this.villeService.getVilles()
       .subscribe(villes => this.villes = villes);
-    
+
     this.serviceCinema.getCinemas()
         .subscribe(data => {
           this.cinemas = data;
@@ -50,7 +50,7 @@ export class CinemaComponent implements OnInit
   OnGetCinema(ville: Ville)
   {
     this.currentVille = ville;
-    this.salles = undefined; 
+    this.salles = undefined;
     this.serviceCinema.getCinema(ville.name)
       .subscribe((data: Cinema[]) =>
       {
@@ -76,8 +76,8 @@ export class CinemaComponent implements OnInit
       return;
     }
     const term = searchTerm.toLowerCase();
-    this.filteredCinemas = this.cinemas.filter(c => 
-      c.name.toLowerCase().includes(term) || 
+    this.filteredCinemas = this.cinemas.filter(c =>
+      c.name.toLowerCase().includes(term) ||
       (c.adresse && c.adresse.toLowerCase().includes(term))
     );
   }

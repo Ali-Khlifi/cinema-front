@@ -6,10 +6,21 @@
       </a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a routerLink="/cinemas" >CINÉMAS</a></li>
-      <li class="active"><a routerLink="/films" >FILMS</a>
-      <li class="active"><a routerLink="/evenements" >ÉVÉNEMENTS</a></li>
-      <li class="active"><a routerLink="/offres" >OFFRES</a></li>
+      <li class="active"><a routerLink="/cinemas">CINÉMAS</a></li>
+      <li class="active"><a routerLink="/films">FILMS</a></li>
+      <li class="active"><a routerLink="/evenements">ÉVÉNEMENTS</a></li>
+      <li class="active"><a routerLink="/offres">OFFRES</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <!-- Afficher le prenom d'utilisateur si connecté -->
+      <li *ngIf="isAuthenticated && userProfile" class="navbar-text">
+        <span>Bonjour, {{ userProfile.firstName || userProfile.username }}</span>
+      </li>
+      <li>
+        <button class="btn btn-link navbar-btn" (click)="isAuthenticated ? logout() : login()">
+          {{ isAuthenticated ? 'Se déconnecter' : 'Se connecter' }}
+        </button>
+      </li>
     </ul>
   </div>
 </nav>
