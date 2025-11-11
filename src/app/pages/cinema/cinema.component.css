@@ -35,9 +35,31 @@
 .cinema-details {
   font-size: 1.4rem;
 }
+.list-group-item-villes {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    margin: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.list-group-item-villes:hover {
+    background-color: #e2e6ea;
+    transform: scale(1.02);
+}
+
+.list-group-item.active {
+    background-color: #337ab7;
+    color: white;
+}
 @media (min-width: 992px) {
   .col-md-3 {
     width: 25%;
-    margin-top: 5.8rem;
+    margin-top: 8.8rem;
   }
 }
