@@ -62,6 +62,7 @@ export class CinemaComponent implements OnInit
   OnGetSalles(c: Cinema)
   {
     this.currentCinema = c;
+    this.serviceCinema.setCurrentCinema(c);
   }
 
   OnNavigateToSalles(cinemaId: number)

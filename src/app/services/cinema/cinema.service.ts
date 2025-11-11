@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable, of, take} from "rxjs";
+import {Observable, of, take, BehaviorSubject} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {Cinema} from "../../models/cinema.model";
 import {Ville} from "../../models/ville.model";
@@ -9,6 +9,11 @@ import {Ville} from "../../models/ville.model";
   providedIn: 'root'
 })
 export class CinemaService {
+
+  // to share the current selected cinema across components
+  private currentCinema = new BehaviorSubject<Cinema | null>(null);
+  public currentCinema$ = this.currentCinema.asObservable();
+  
   constructor(private http : HttpClient) { }
 
   urlApi = environment.API_URL;
@@ -47,5 +52,13 @@ export class CinemaService {
   }
   public getCinemas(): Observable<Cinema[]> {
     return this.http.get<Cinema[]>(this.urlCinema).pipe(take(1));
+  }
+
+  public setCurrentCinema(cinema: Cinema): void {
+    this.currentCinema.next(cinema);
+  }
+
+  public getCurrentCinema(): Observable<Cinema | null> {
+    return this.currentCinema$;
   }
 }

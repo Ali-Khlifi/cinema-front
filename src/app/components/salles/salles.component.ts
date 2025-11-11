@@ -48,6 +48,19 @@ export class SallesComponent implements OnInit
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
+      
+      // Get cinema name from service or fetch it by ID
+      this.serviceCinema.getCurrentCinema().subscribe(cinema => {
+        if (cinema && cinema.id === this.cinemaId) {
+          this.currentCinemaName = cinema.name;
+        } else if (this.cinemaId) {
+          // Fallback: fetch cinema by ID
+          this.serviceCinema.getCinemaById(this.cinemaId).subscribe(cinema => {
+            this.currentCinemaName = cinema.name;
+            this.serviceCinema.setCurrentCinema(cinema);
+          });
+        }
+      });
     });
   }
 
