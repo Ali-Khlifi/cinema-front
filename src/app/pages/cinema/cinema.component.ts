@@ -33,16 +33,16 @@ export class CinemaComponent implements OnInit
     public villeService: VilleService
   ) { }
 
-  ngOnInit()
+  async ngOnInit()
   {
-    this.villeService.getVilles()
-      .subscribe(villes => this.villes = villes);
 
     this.serviceCinema.getCinemas()
         .subscribe(data => {
           this.cinemas = data;
           this.filteredCinemas = [...data];
         });
+     this.villeService.getVilles()
+          .subscribe(villes => this.villes = villes);
 
     //this.OnGetTicketsPlaces(this.currentProject);
 

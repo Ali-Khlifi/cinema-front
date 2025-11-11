@@ -17,11 +17,6 @@ export class VilleService {
   urlVille: string = this.apiUrl + '/ville'
 
   getVilles(): Observable<Ville[]>{
-    return from(this.keycloak.getToken()).pipe(
-      mergeMap(token => {
-        const headers = { 'Authorization': `Bearer ${token}` };
-        return this.http.get<Ville[]>(this.urlVille, { headers });
-      })
-    );
+    return this.http.get<Ville[]>(this.urlVille);
   }
 }
