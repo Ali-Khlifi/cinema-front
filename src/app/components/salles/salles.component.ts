@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VilleService } from 'src/app/services/ville/ville.service';
 import { Ville } from 'src/app/models/ville.model';
 import { CinemaService } from 'src/app/services/cinema/cinema.service';
-//test 
 
 @Component({
   selector: 'app-salles',
