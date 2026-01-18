@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="col-md-9 offset-md-3">
+    <div class="panel-default">
+      <div class="panel-body">
+        <!-- Header with back button -->
+      <div class="header-with-back mb-4">
+        <button class="btn-back" (click)="goBack()">
+          <i class="bi bi-arrow-left"></i> Retour
+        </button>
+        <h2 class="title-section">
+          TARIFS
+        </h2>
+      </div>
+
+      <!-- Film Info Card -->
+      <div class="card mb-4" *ngIf="filmProjection">
+        <div class="card-body">
+          <h5 class="card-title">{{ filmProjection.film?.title }}</h5>
+          <p class="card-text">
+            <strong>Date:</strong> {{ filmProjection.projectionDate | date: 'dd/MM/yyyy' }} à {{ formatTime(filmProjection.startTime) }}<br>
+            <strong>Nombre de places:</strong> {{ totalSeats }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Price Types -->
+      <div *ngIf="!isLoading && !errorMessage" class="price-types">
+        <div class="price-type-item" *ngFor="let priceType of priceTypes">
+          <div class="price-info">
+            <div class="price-name">{{ priceType.label }}</div>
+            <div class="price-amount">{{ priceType.price | number:'1.2-2' }} €</div>
+          </div>
+          <div class="price-counter">
+            <button class="btn btn-counter" 
+                    (click)="decrement(priceType.id)"
+                    [disabled]="getCount(priceType.id) === 0">
+              -
+            </button>
+            <div class="counter-value">{{ getCount(priceType.id) }}</div>
+            <button class="btn btn-counter" 
+                    (click)="increment(priceType.id)"
+                    [disabled]="getTotalSelectedSeats() >= totalSeats">
+              +
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warning message -->
+      <div *ngIf="getTotalSelectedSeats() !== totalSeats && getTotalSelectedSeats() > 0" class="alert alert-warning mt-3">
+        <i class="bi bi-exclamation-triangle"></i>
+        Vous avez sélectionné {{ getTotalSelectedSeats() }} place(s) sur {{ totalSeats }}. 
+        Veuillez sélectionner exactement {{ totalSeats }} place(s).
+      </div>
+
+      <!-- Action Button -->
+      <div class="action-buttons mt-4 mb-5">
+        <button class="btn btn-primary btn-lg btn-block" 
+                (click)="continueToRecap()"
+                [disabled]="!canProceed()">
+          <i class="bi bi-check-circle"></i> CONTINUER MA COMMANDE
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

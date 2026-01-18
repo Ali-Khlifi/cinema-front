@@ -1,0 +1,314 @@
+/* Container and layout - same as salles */
+.container {
+  padding: 0;
+}
+
+.col-md-9 {
+  padding: 0;
+}
+
+.panel-default {
+  border: none;
+}
+
+.panel-body {
+  padding: 1rem;
+}
+
+/* Header with back button */
+.header-with-back {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Back button - style like villes */
+.btn-back {
+  padding: 1rem;
+  background-color: #337ab7;
+  color: white;
+  border: 1.5px solid #337ab7;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-back:hover {
+  background-color: #285a8e;
+  transform: scale(1.02);
+}
+
+/* Title section */
+.title-section {
+  color: #1a1a1a;
+  font-weight: bold;
+  margin: 0;
+  font-size: 2rem;
+  flex: 1;
+  text-align: center;
+}
+
+/* Film info card - style cohérent avec cinema-info */
+.card {
+  border: 0.1rem solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #337ab7;
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Promo cards - style bleu cohérent */
+.promo-cards {
+  margin-bottom: 2rem;
+}
+
+.promo-card {
+  background-color: #337ab7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.promo-card:hover {
+  background-color: #285a8e;
+  transform: scale(1.02);
+}
+
+.promo-card .card-body {
+  padding: 1rem 1.5rem;
+}
+
+.promo-card .btn {
+  border: 2px solid white;
+  color: white;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.promo-card .btn:hover {
+  background-color: white;
+  color: #337ab7;
+}
+
+/* Price types list */
+.price-types {
+  margin-top: 2rem;
+}
+
+.price-type-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border: 1.5px solid #ddd;
+  background-color: #f9f9f9;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.price-type-item:hover {
+  background-color: #e2e6ea;
+  transform: scale(1.01);
+}
+
+.price-info {
+  flex: 1;
+}
+
+.price-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.price-amount {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #337ab7;
+}
+
+/* Counter buttons */
+.price-counter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-counter {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #337ab7;
+  border-radius: 5px;
+  background-color: white;
+  color: #337ab7;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-counter:hover:not(:disabled) {
+  background-color: #337ab7;
+  color: white;
+  transform: scale(1.05);
+}
+
+.btn-counter:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.counter-value {
+  min-width: 50px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #337ab7;
+}
+
+/* Special offer banner */
+.special-offer .card {
+  border-radius: 5px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #337ab7 100%);
+}
+
+.special-offer .card-title {
+  color: white;
+}
+
+/* Action buttons */
+.action-buttons {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.btn-lg {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: scale(1.02);
+}
+
+.btn-primary {
+  background-color: #337ab7;
+  border: none;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #285a8e;
+  transform: scale(1.02);
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-block {
+  width: 100%;
+  display: block;
+  font-size: 1.5rem;
+}
+
+/* Alert messages */
+.alert {
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  color: #856404;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+/* Loading spinner */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-with-back {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-back {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .title-section {
+    font-size: 1.5rem;
+  }
+
+  .price-type-item {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-block,
+  .btn-primary {
+    width: 100%;
+  }
+}

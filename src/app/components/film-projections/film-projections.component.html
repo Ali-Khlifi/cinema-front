@@ -5,31 +5,41 @@
     </div>
     <div class="col-md-6">
       <div class="film-description">
-        <p><span class="label">Sortie le</span> {{ formatDate(filmProjection.film.dateSortie) }}</p>
-        <p><span class="label">De</span> {{ filmProjection.film.realisateur }}</p>
-        <p><span class="label">Synopsis</span> {{ filmProjection.film.description }}</p>
+        <p><span class="label">Sortie le</span> {{ (filmProjection.film?.releaseDate || filmProjection.film?.dateSortie) | date: 'dd/MM/yyyy' }}</p>
+        <p><span class="label">De</span> {{ filmProjection.film?.director || filmProjection.film?.realisateur }}</p>
+        <p><span class="label">Synopsis</span> {{ filmProjection.film?.description }}</p>
       </div>
       <div class="seances">
         <ul class="list-group-proj">
-          <li *ngFor="let seance of seances" (click)="getListSeances()" class="list-group-item clickable">
+          <li (click)="getListSeances()" class="list-group-item clickable">
             <div class="seance-heure">
-              {{ seance.heureDebut | date: "HH:mm" }}
+              {{ filmProjection.startTime }}
             </div>
             <div class="seance-prix">
-              {{ filmProjection.prix | number: '0.00' }} €
+              À partir de 10.00 €
             </div>
           </li>
         </ul>
-        <!--affichage d'une liste de tickets (par numero)-->
+        <!--affichage d'une liste de sièges (par numéro)-->
         <div *ngIf="showSeancesList" class="list-tickets">
-          <button class="{{getTicketPlace(t)}}" (click)="OnSelectTicket(t)" [disabled]="t.reservee"
-            *ngFor="let t of tickets">
-            {{t.placeId}}
+          <button [class]="getSeatClass(seat)" 
+                  (click)="OnSelectSeat(seat)" 
+                  [disabled]="seat.reserved"
+                  *ngFor="let seat of seats">
+            {{ seat.number }}
           </button>
         </div>
-        <!-- payement tickets-->
-        <div *ngIf="selectedTickets.length > 0" class="pay-form">
-          <app-ticket-payment [clientTickets]="selectedTickets"></app-ticket-payment>
+        <!-- Seat selection summary -->
+        <div *ngIf="selectedSeats.length > 0" class="pay-form">
+          <h4>Résumé de la sélection</h4>
+          <p><strong>Places sélectionnées:</strong> {{ selectedSeats.length }}</p>
+          <p><strong>Numéros:</strong> {{ getSelectedSeatNumbers() }}</p>
+          <p><strong>Prix de base:</strong> {{ (selectedSeats[0].basePrice || 0) | number:'1.2-2' }} €</p>
+          
+          <button class="btn btn-primary btn-block btn-lg mt-3" 
+                  (click)="confirmReservation()">
+            <i class="bi bi-arrow-right-circle"></i> Choisir les tarifs
+          </button>
         </div>
       </div>
     </div>

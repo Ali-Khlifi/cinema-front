@@ -19,8 +19,7 @@
           <div *ngFor="let c of filteredCinemas" class="cinema-info">
             <a class="cinema-name" (click)="OnNavigateToSalles(c.id)">{{c.name}}</a>
             <div class="cinema-details">
-              <p class="nb-salle"> {{c.nombreSalles}} salles</p>
-              <p class="cine-adresse">{{c.adresse}}</p>
+              <p class="cine-adresse">{{ formatAddress(c) }}</p>
             </div>
           </div>
         </div>

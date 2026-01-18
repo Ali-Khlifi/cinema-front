@@ -1,52 +1,56 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-import {FilmProjectionService} from "../../services/film-projection/film-projection.service";
-import {Observable} from "rxjs";
-import {FilmProjection} from "../../models/film-projection.model";
-import {Salle} from "../../models/salle.model";
-import {TicketService} from "../../services/ticket/ticket.service";
-import {Ticket} from "../../models/ticket.model";
-import {Seance} from "../../models/seance.model";
-import {SeanceService} from "../../services/seance/seance.service";
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { FilmProjectionService } from '../../services/film-projection/film-projection.service';
+import { SeatAvailabilityService } from '../../services/seat-availability/seat-availability.service';
+import { ReservationStateService } from '../../services/reservation-state/reservation-state.service';
+import { FilmProjection } from '../../models/film-projection.model';
+import { SeatAvailability } from '../../models/seat-availability.model';
 
+/**
+ * Component for displaying film projection details
+ * Shows film information, showtimes, and ticket selection
+ * @deprecated Seance concept - will be refactored to use FilmProjection directly
+ */
 @Component({
   selector: 'app-film-projections',
   templateUrl: './film-projections.component.html',
   styleUrls: ['./film-projections.component.css'],
   providers: [DatePipe]
 })
-export class FilmProjectionsComponent implements OnInit{
+export class FilmProjectionsComponent implements OnInit {
+  /** Film projection to display */
+  @Input() filmProjection!: FilmProjection;
 
-  @Input() filmProjection !: FilmProjection;
+  /** Media/poster image for the film */
+  mediaFilm: any;
 
-  mediaFilm!:any;
+  /** List of available seats for this projection */
+  seats: SeatAvailability[] = [];
 
-  salleId!: number;
-  salle!: Salle;
-  ticket !: Ticket;
-  tickets : Ticket[] = [];
-  seance !: Seance;
-  seances : Seance[] = [];
-  selectedTickets : Ticket[] = [];
-  selectedProjectionId: number | null = null;
-  showTicketsList: boolean = false;
+  /** List of selected seats by user */
+  selectedSeats: SeatAvailability[] = [];
+
+  /** Whether to show the seats list */
+  showSeatsList: boolean = false;
+
+  /** Whether to show the showtimes list */
   showSeancesList: boolean = false;
 
+  constructor(
+    private router: Router,
+    private filmProjectionService: FilmProjectionService,
+    private seatAvailabilityService: SeatAvailabilityService,
+    private reservationStateService: ReservationStateService,
+    private datePipe: DatePipe
+  ) {}
 
-
-
-  constructor(private filmProjectionService: FilmProjectionService,
-              private ticketService: TicketService,
-              private seanceService: SeanceService,
-              private datePipe: DatePipe) {
-  }
   ngOnInit(): void {
-    this.getTicketsByProjection(this.filmProjection.id);
-    this.getSeancesByProjection(this.filmProjection.id);
+    // Load tickets only when showSeancesList is toggled by user
   }
 
-  ngOnChanges(changes: SimpleChanges) : void {
-    if (changes['filmProjection'] && this.filmProjection.film.id){
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['filmProjection'] && this.filmProjection?.film?.id) {
       this.filmProjectionService.getMediaFilm(this.filmProjection.film.id).subscribe(data => {
         let read = new FileReader();
         read.readAsDataURL(data);
@@ -59,58 +63,88 @@ export class FilmProjectionsComponent implements OnInit{
     }
   }
 
-  getTicketsByProjection(filmProjectionId: number){
-    filmProjectionId = this.filmProjection.id
-      this.ticketService.getTicketsByFilmProjection(filmProjectionId)
-        .subscribe(tickets => {this.tickets = tickets;
-        })
-  }
-  getSeancesByProjection(filmProjectionId: number){
-    filmProjectionId = this.filmProjection.id;
-    this.seanceService.getSeancesByFilmProjection(filmProjectionId)
-      .subscribe(seances => {this.seances = seances;
-      })
+  /**
+   * Load available seats for this projection
+   */
+  loadSeats(): void {
+    this.seatAvailabilityService.getAvailableSeats(this.filmProjection.id)
+      .subscribe(seats => {
+        this.seats = seats;
+      });
   }
 
-  OnSelectTicket(t: any) {
-    // initialize the selected ticket in true on click
-    if(!t.selected) {
-      // added a new selected ticket to the list
-      t.selected = true;
-      this.selectedTickets.push(t);
-    } else {
-      // removed a selected ticket from the list
-      t.selected = false;
-      this.selectedTickets.splice(this.selectedTickets.indexOf(t), 1);
+  /**
+   * Handle seat selection
+   */
+  OnSelectSeat(seat: SeatAvailability): void {
+    if (seat.reserved) {
+      return; // Can't select a reserved seat
     }
-  }
-  getTicketPlace(t: any) {
-    let str ="btn ticket ";
-    if(t.reservee == true){
-      str +=" btn-danger'"
-    }  else if (t.selected) {
-      str += "btn-warning";
-    } else {
-      str += "btn-success"
-    }
-    return str;
 
-  }
-  getListTickets() {
-    // Si showTicketsList est true, on le met à false et vice-versa.
-    this.showTicketsList = !this.showTicketsList;
-    if(this.showTicketsList){
-      this.getTicketsByProjection(this.filmProjection.id);
+    if (!seat.selected) {
+      seat.selected = true;
+      this.selectedSeats.push(seat);
+    } else {
+      seat.selected = false;
+      this.selectedSeats.splice(this.selectedSeats.indexOf(seat), 1);
     }
   }
-  getListSeances() {
+
+  /**
+   * Get CSS class for seat button based on status
+   * - Reserved seats: orange (btn-warning)
+   * - Selected seats: blue (btn-info)
+   * - Available seats: green (btn-success)
+   */
+  getSeatClass(seat: SeatAvailability): string {
+    let cssClass = "btn ticket ";
+    if (seat.reserved) {
+      cssClass += "btn-warning"; // Orange for reserved seats
+    } else if (seat.selected) {
+      cssClass += "btn-info"; // Blue for selected seats
+    } else {
+      cssClass += "btn-success"; // Green for available seats
+    }
+    return cssClass;
+  }
+
+  /**
+   * Toggle seats list visibility
+   */
+  getListSeances(): void {
     this.showSeancesList = !this.showSeancesList;
-    if(this.showSeancesList){
-      this.getSeancesByProjection(this.filmProjection.id);
+    if (this.showSeancesList) {
+      this.loadSeats();
+    }
+  }
+
+  /**
+   * Get comma-separated list of selected seat numbers
+   */
+  getSelectedSeatNumbers(): string {
+    return this.selectedSeats.map(s => s.number).join(', ');
+  }
+
+  /**
+   * Calculate total price for selected seats
+   */
+  calculateTotal(): number {
+    return this.selectedSeats.reduce((total, seat) => total + (seat.basePrice || 0), 0);
+  }
+
+  /**
+   * Confirm seat selection and navigate to price selection page
+   */
+  confirmReservation(): void {
+    if (this.selectedSeats.length === 0) {
+      return;
     }
 
+    // Initialize reservation state
+    this.reservationStateService.initReservation(this.filmProjection, this.selectedSeats);
+
+    // Navigate to price selection page
+    this.router.navigate(['/reservation-prices']);
   }
-  formatDate(dateStr: Date){
-    return this.datePipe.transform(dateStr, 'dd/MM/yyyy');
-  }
+
 }

@@ -16,6 +16,8 @@ import { EvenementsComponent } from './pages/evenements/evenements.component';
 import { OffresComponent } from './pages/offres/offres.component';
 import { TicketPaymentComponent } from './components/ticket-payment/ticket-payment.component';
 import { CinemaSearchComponent } from './components/search/cinema-search/cinema-search.component';
+import { ReservationPricesComponent } from './pages/reservation-prices/reservation-prices.component';
+import { ReservationRecapComponent } from './pages/reservation-recap/reservation-recap.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KeycloakInterceptor } from './services/security/keycloak.interceptor';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
@@ -52,7 +54,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     EvenementsComponent,
     OffresComponent,
     TicketPaymentComponent,
-    CinemaSearchComponent
+    CinemaSearchComponent,
+    ReservationPricesComponent,
+    ReservationRecapComponent
   ],
   imports: [
     BrowserModule,
