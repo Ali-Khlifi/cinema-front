@@ -1,81 +1,102 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { Salle } from "../../models/salle.model";
-import { SalleService } from "../../services/salle/salle.service";
-import { Cinema } from "../../models/cinema.model";
-import { FilmProjectionService } from "../../services/film-projection/film-projection.service";
-import { FilmProjection } from "../../models/film-projection.model";
-import { TicketService } from "../../services/ticket/ticket.service";
-import { Ticket } from "../../models/ticket.model";
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VilleService } from 'src/app/services/ville/ville.service';
-import { Ville } from 'src/app/models/ville.model';
-import { CinemaService } from 'src/app/services/cinema/cinema.service';
+import { Room } from '../../models/room.model';
+import { Cinema } from '../../models/cinema.model';
+import { City } from '../../models/city.model';
+import { FilmProjection } from '../../models/film-projection.model';
+import { Ticket } from '../../models/ticket.model';
+import { RoomService } from '../../services/room/room.service';
+import { CinemaService } from '../../services/cinema/cinema.service';
+import { FilmProjectionService } from '../../services/film-projection/film-projection.service';
+import { CityService } from '../../services/city/city.service';
+import { TicketService } from '../../services/ticket/ticket.service';
 
+/**
+ * Component for displaying cinema rooms and their film projections
+ * Allows users to browse rooms by cinema and city
+ */
 @Component({
   selector: 'app-salles',
   templateUrl: './salles.component.html',
   styleUrls: ['./salles.component.css']
 })
-export class SallesComponent implements OnInit
-{
-
+export class SallesComponent implements OnInit {
+  /** Cinema input (optional, can be passed from parent) */
   @Input() cinema!: Cinema;
-  salles: Salle[] = [];
-  public villes: Ville[] = [];
-  filmProjections: FilmProjection[] = [];
-  tickets: Ticket[] = [];
+
+  /** List of rooms in the selected cinema */
+  public rooms: Room[] = [];
+
+  /** List of all cities */
+  public cities: City[] = [];
+
+  /** List of film projections */
+  public filmProjections: FilmProjection[] = [];
+
+  /** List of tickets */
+  public tickets: Ticket[] = [];
+
+  /** Current cinema ID from route params */
   public cinemaId: number | undefined;
-  public currentVilleId: number | undefined;
+
+  /** Current city ID */
+  public currentCityId: number | undefined;
+
+  /** Current cinema name for display */
   public currentCinemaName: string = '';
+
+  /** List of all cinemas */
   public cinemas: Cinema[] = [];
+
+  /** Other cinemas in the same city */
+  public otherCinemasInCity: Cinema[] = [];
+
+  /** Currently selected city */
+  public currentCity: City | undefined;
+
+  /** Loading state */
+  public isLoading: boolean = false;
+
+  /** Error message */
+  public errorMessage: string = '';
+
+  // Keep original property names for template compatibility
+  public salles: Room[] = [];
+  public villes: City[] = [];
+  public currentVilleId: number | undefined;
+  public currentVille: City | undefined;
   public otherCinemasInVille: Cinema[] = [];
-  public currentVille: Ville | undefined;
 
   constructor(
     private route: ActivatedRoute,
-    private serviceSalle: SalleService,
-    private serviceCinema: CinemaService,
-    private serviceFilmProjection: FilmProjectionService,
-    private serviceVille: VilleService,
-    private serviceTicket: TicketService,
     private router: Router,
-  ) { }
+    private roomService: RoomService,
+    private cinemaService: CinemaService,
+    private filmProjectionService: FilmProjectionService,
+    private cityService: CityService,
+    private ticketService: TicketService
+  ) {}
 
-  ngOnInit(): void
-  {
-    this.route.params.subscribe(params =>
-    {
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
-      
-      // Get cinema name from service or fetch it by ID
-      this.serviceCinema.getCurrentCinema().subscribe(cinema => {
-        if (cinema && cinema.id === this.cinemaId) {
-          this.currentCinemaName = cinema.name;
-        } else if (this.cinemaId) {
-          // Fallback: fetch cinema by ID
-          this.serviceCinema.getCinemaById(this.cinemaId).subscribe(cinema => {
-            this.currentCinemaName = cinema.name;
-            this.serviceCinema.setCurrentCinema(cinema);
-          });
-        }
-      });
     });
   }
 
-  OnGetSalles(cinemaId: number)
-  {
+  /**
+   * Load rooms for a given cinema
+   * Fetches rooms by cinema ID and loads film projections for each room
+   */
+  OnGetSalles(cinemaId: number): void {
     if (cinemaId) {
-      this.serviceSalle.getSallesByCinemaId(cinemaId)
-        .subscribe(salles =>
-        {
-          this.salles = salles
-          this.salles.forEach((salle: Salle) =>
-          {
-            this.serviceFilmProjection.getFilmProjectionBySalle(salle.id)
-              .subscribe((filmProjections) =>
-              {
+      this.roomService.getRoomsByCinemaId(cinemaId)
+        .subscribe(salles => {
+          this.salles = salles;
+          this.salles.forEach((salle: Room) => {
+            this.filmProjectionService.getFilmProjectionsByRoomId(salle.id)
+              .subscribe((filmProjections) => {
                 salle.filmProjections = filmProjections;
               })
           })
@@ -83,24 +104,14 @@ export class SallesComponent implements OnInit
     }
   }
 
-  OnGetVilles()
-  {
-    this.serviceVille.getVilles().subscribe(villes =>
-    {
+  OnGetVilles(): void {
+    this.cityService.getCities().subscribe(villes => {
       this.villes = villes;
-      // find the current ville and get its cinemas
-      this.villes.forEach(ville =>
-      {
-        this.serviceCinema.getCinema(ville.name).subscribe(cinemas =>
-        {
-          const currentCinema = cinemas.find(cinema => cinema.id === this.cinemaId);
-        });
-      });
     });
   }
+
   // When user clicks on a cinema, load its salles and update the cinema info
-  onSelectCinema(cinema: Cinema)
-  {
+  onSelectCinema(cinema: Cinema): void {
     this.cinemaId = cinema.id;
     this.currentCinemaName = cinema.name;
     this.OnGetSalles(cinema.id);
@@ -109,13 +120,12 @@ export class SallesComponent implements OnInit
     this.otherCinemasInVille = this.cinemas.filter(c => c.id !== cinema.id);
     this.router.navigate(['/salles', cinema.id]);
   }
-  OnGetCinema(ville: Ville)
-  {
+
+  OnGetCinema(ville: City): void {
     this.currentVille = ville;
     this.salles = [];
-    this.serviceCinema.getCinema(ville.name)
-      .subscribe(cinemas => 
-      {
+    this.cinemaService.getCinemasByCity(ville.name)
+      .subscribe(cinemas => {
         this.cinemas = cinemas;
         if (this.cinemas.length > 0) {
           const defaultCinema = this.cinemas[0];

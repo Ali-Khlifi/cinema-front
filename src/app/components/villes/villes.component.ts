@@ -1,27 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import { Ville } from 'src/app/models/ville.model';
-import {VilleService} from "../../services/ville/ville.service";
+import { Component, OnInit } from '@angular/core';
+import { City } from '../../models/city.model';
+import { CityService } from '../../services/city/city.service';
 
+/**
+ * Component for displaying and managing cities
+ * @deprecated Consider using a more specific component or integrating into cinema component
+ */
 @Component({
   selector: 'app-villes',
   templateUrl: './villes.component.html',
   styleUrls: ['./villes.component.css']
 })
 export class VillesComponent implements OnInit {
+  villes: City[] = [];
 
-  constructor(private villesService: VilleService){}
+  constructor(private cityService: CityService) {}
 
+  /**
+   * Initializes the component
+   * Loads cities on init
+   */
   ngOnInit(): void {
   }
 
-  villes: Ville[] = [];
-
-  getVilles(){
-    this.villesService.getVilles().subscribe(villes => this.villes = villes);
+  getVilles() {
+    this.cityService.getCities().subscribe(villes => this.villes = villes);
   }
-
-
-
-
-
 }
