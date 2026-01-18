@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,9 @@ export class AppComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    // Log application version
+    console.log(`🎬 Cinema App v${environment.version} ${environment.production ? '(Production)' : '(Development)'}`);
+    
     this.isAuthenticated = await this.keycloakService.isLoggedIn();
 
     if (this.isAuthenticated) {
