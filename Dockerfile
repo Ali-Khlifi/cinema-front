@@ -26,7 +26,7 @@ RUN npm run build -- --configuration production
 FROM nginx:alpine
 
 # Copy built files from build stage
-COPY --from=build /app/dist/cinema-front /usr/share/nginx/html
+COPY --from=build /app/dist/cinema-client /usr/share/nginx/html
 
 # Custom Nginx config for Single Page Application (SPA)
 # This ensures all routes are redirected to index.html (Angular routing)
