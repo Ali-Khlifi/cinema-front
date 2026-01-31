@@ -4,6 +4,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable, from } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { KeycloakService } from 'keycloak-angular';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class KeycloakInterceptor implements HttpInterceptor {
@@ -12,7 +13,7 @@ export class KeycloakInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Exclure les requêtes vers Keycloak et les assets
     if (req.url.includes('keycloak') || req.url.includes('assets') ||
-      req.url.includes('http://localhost:8088')) {
+      req.url.includes(environment.keycloak.url)) {
       return next.handle(req);
     }
 

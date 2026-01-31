@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SecurityService {
@@ -7,9 +8,9 @@ export class SecurityService {
 
   constructor() {
     this.keycloak = new Keycloak({
-      url: 'http://localhost:8088',
-      realm: 'cinemas-app',
-      clientId: 'cinemas-app-client'
+      url: environment.keycloak.url,
+      realm: environment.keycloak.realm,
+      clientId: environment.keycloak.clientId
     });
   }
 

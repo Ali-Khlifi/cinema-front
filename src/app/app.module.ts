@@ -22,15 +22,16 @@ import { AppFooterComponent } from './components/app-footer/app-footer.component
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KeycloakInterceptor } from './services/security/keycloak.interceptor';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { environment } from '../environments/environment';
 
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://localhost:8088',
-        realm: 'cinemas-app',
-        clientId: 'cinemas-app-client'
+        url: environment.keycloak.url,
+        realm: environment.keycloak.realm,
+        clientId: environment.keycloak.clientId
       },
       initOptions: {
         onLoad: 'check-sso',
