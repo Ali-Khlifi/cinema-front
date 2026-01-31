@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.keycloakService.logout(window.location.origin);
+    this.keycloakService.logout(window.location.origin + '/');
   }
 
   get username(): string {
