@@ -16,8 +16,8 @@ ARG API_URL
 ARG KEYCLOAK_URL
 
 # Replace placeholder URLs with actual production URLs
-RUN sed -i "s|https://cinema-api.onrender.com/api|${API_URL}|g" src/environments/environment.prod.ts && \
-    sed -i "s|http://localhost:8088|${KEYCLOAK_URL}|g" src/environments/environment.prod.ts
+RUN sed -i "s|'https://cinema-api.onrender.com/api'|'${API_URL}'|g" src/environments/environment.prod.ts && \
+    sed -i "s|'http://localhost:8088'|'${KEYCLOAK_URL}'|g" src/environments/environment.prod.ts
 
 # Build for production
 RUN npm run build -- --configuration production
