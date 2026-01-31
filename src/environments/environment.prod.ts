@@ -6,15 +6,12 @@ export const environment = {
   version: '1.0.0',
   buildDate: '2026-01-18',
   
-  // Backend API URL - Update with your Render URL after deployment
-  // Example: https://cinema-api-xxxxx.onrender.com/api
-  API_URL: 'https://cinema-api.onrender.com/api',
+  // Backend API URL - Production VPS
+  API_URL: 'http://94.250.202.228:8082/api',
   
-  // Keycloak Configuration
-  // Option 1: If you have a Keycloak instance, update the URL below
-  // Option 2: If not using Keycloak yet, comment this section
+  // Keycloak Configuration - Production VPS
   keycloak: {
-    url: 'http://localhost:8088', // TODO: Replace with production Keycloak URL
+    url: 'http://94.250.202.228:8080',
     realm: 'cinemas-app',
     clientId: 'cinemas-app-client'
   }
