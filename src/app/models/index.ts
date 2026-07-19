@@ -17,10 +17,5 @@ export * from './film.model';
 export * from './film-projection.model';
 export * from './ticket.model';
 
-// Legacy models (deprecated - will be removed in future versions)
-export * from './ville.model';
-export * from './salle.model';
-export * from './seance.model';
-
 export * from './ticket-reservation.model';
 

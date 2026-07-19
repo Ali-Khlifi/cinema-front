@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {Observable, take} from "rxjs";
-import {Ville} from "../../models/ville.model";
 import {HttpClient} from "@angular/common/http";
 import {Film} from "../../models/film.model";
 

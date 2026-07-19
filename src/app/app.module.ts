@@ -7,7 +7,6 @@ import { CinemaComponent } from './pages/cinema/cinema.component';
 import {HttpClientModule} from "@angular/common/http";
 import {CinemaService} from "./services/cinema/cinema.service";
 import {FormsModule} from "@angular/forms";
-import { VillesComponent } from './components/villes/villes.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SallesComponent } from './components/salles/salles.component';
 import { FilmProjectionsComponent } from './components/film-projections/film-projections.component';
@@ -48,7 +47,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     CinemaComponent,
-    VillesComponent,
     HomeComponent,
     SallesComponent,
     FilmProjectionsComponent,
