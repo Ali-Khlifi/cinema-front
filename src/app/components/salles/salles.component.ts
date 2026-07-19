@@ -82,6 +82,19 @@ export class SallesComponent implements OnInit {
       this.cinemaId = +params['cinemaId'];
       this.OnGetSalles(this.cinemaId);
       this.OnGetVilles();
+
+      // Get cinema name from the shared service state (set when user clicks a cinema)
+      this.cinemaService.getCurrentCinema().subscribe(cinema => {
+        if (cinema && cinema.id === this.cinemaId) {
+          this.currentCinemaName = cinema.name;
+        } else if (this.cinemaId) {
+          // Fallback: fetch cinema by ID (e.g. direct navigation or page refresh)
+          this.cinemaService.getCinemaById(this.cinemaId).subscribe(cinema => {
+            this.currentCinemaName = cinema.name;
+            this.cinemaService.setCurrentCinema(cinema);
+          });
+        }
+      });
     });
   }
 
