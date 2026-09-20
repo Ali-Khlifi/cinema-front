@@ -18,9 +18,11 @@
 }
 
 .cinema-info {
-  width: 30rem; 
+  width: 100%;
+  max-width: 30rem;
   border: 0.1rem solid #ccc;
   padding: 1rem;
+  box-sizing: border-box;
 }
 .nb-salle {
   font-weight: bold;
@@ -61,5 +63,20 @@
   .col-md-3 {
     width: 25%;
     margin-top: 8.8rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .col-md-3 {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .list-items {
+    justify-content: center;
+  }
+
+  .cinema-info {
+    max-width: 100%;
   }
 }

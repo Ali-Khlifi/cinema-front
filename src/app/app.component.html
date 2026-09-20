@@ -1,28 +1,43 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header custom-navbar">
-      <a class="navbar-brand" href="#" >
+      <button
+        type="button"
+        class="navbar-toggle"
+        (click)="menuOpen = !menuOpen"
+        [attr.aria-expanded]="menuOpen"
+        aria-label="Ouvrir le menu"
+      >
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/cinemas">
         <img src="./assets/images/logo-site_.png" alt="logo du site" class="navbar-logo custom-logo">
       </a>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a routerLink="/cinemas">CINÉMAS</a></li>
-      <li class="active"><a routerLink="/films">FILMS</a></li>
-      <li class="active"><a routerLink="/evenements">ÉVÉNEMENTS</a></li>
-      <li class="active"><a routerLink="/offres">OFFRES</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <!-- Afficher le prenom d'utilisateur si connecté -->
-      <li *ngIf="isAuthenticated && userProfile" class="navbar-text">
-        <span>Bonjour, {{ userProfile.firstName || userProfile.username }}</span>
-      </li>
-      <li>
-        <button class="btn btn-link navbar-btn" (click)="isAuthenticated ? logout() : login()">
-          {{ isAuthenticated ? 'Se déconnecter' : 'Se connecter' }}
-        </button>
-      </li>
-    </ul>
+
+    <div class="navbar-collapse" [class.is-open]="menuOpen">
+      <ul class="nav navbar-nav">
+        <li class="active"><a routerLink="/cinemas" (click)="menuOpen = false">CINÉMAS</a></li>
+        <li class="active"><a routerLink="/films" (click)="menuOpen = false">FILMS</a></li>
+        <li class="active"><a routerLink="/evenements" (click)="menuOpen = false">ÉVÉNEMENTS</a></li>
+        <li class="active"><a routerLink="/offres" (click)="menuOpen = false">OFFRES</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li *ngIf="isAuthenticated && userProfile" class="navbar-text">
+          <span>Bonjour, {{ userProfile.firstName || userProfile.username }}</span>
+        </li>
+        <li>
+          <button class="btn btn-link navbar-btn" (click)="isAuthenticated ? logout() : login()">
+            {{ isAuthenticated ? 'Se déconnecter' : 'Se connecter' }}
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
-<router-outlet></router-outlet>
+<main class="app-main">
+  <router-outlet></router-outlet>
+</main>
 <app-footer></app-footer>

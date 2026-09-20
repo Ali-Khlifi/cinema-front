@@ -1,8 +1,15 @@
+/* Layout film : colonne par défaut (mobile-first) */
 .col-md-6 {
   display: flex;
-  justify-content: space-between; 
-  align-items: flex-start; 
-  gap:20px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  width: 100%;
+}
+
+.col-md-3 {
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 /* Image du film */
@@ -12,27 +19,32 @@
   height: auto;
   border: 2px solid black;
   padding: 5px;
+  display: block;
+  margin: 0 auto;
 }
+
 .seances {
-  margin-left: 2rem;
-  width: 100%; 
-  max-width: 800px; 
-  padding: 1rem;
+  margin-left: 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem 0;
 }
+
 .seances .list-group-proj {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem; 
+  gap: 1rem;
   padding: 0;
-  list-style: none; 
+  list-style: none;
 }
+
 .list-group-item {
-  flex: 1 1 calc(40% - 1rem); 
-  max-width: calc(40% - 1rem); 
-  height: auto; 
+  flex: 1 1 100%;
+  max-width: 100%;
+  height: auto;
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
   border: 1.5px solid #ddd;
   border-radius: 5px;
   padding: 1rem;
@@ -43,7 +55,7 @@
 
 .list-group-item:hover {
   background-color: #eaeaea;
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .pay-form {
@@ -53,18 +65,18 @@
   border-radius: 4px;
   background-color: #f7f7f7;
 }
+
 .seance-heure {
-  font-size: 1.5rem; 
-  font-weight: bold; 
+  font-size: 1.5rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
 .seance-prix {
-  font-size: 1.3rem; 
-  color: #666; 
+  font-size: 1.3rem;
+  color: #666;
 }
 
-/* Boutons des tickets */
 .list-tickets button {
   padding: 0.5rem 1rem;
   border: 1px solid #ddd;
@@ -72,12 +84,14 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .list-tickets {
   margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+
 .list-tickets button.available {
   background-color: #f9f9f9;
 }
@@ -92,55 +106,66 @@
 }
 
 .film-description {
-  padding: 1.5rem; 
-  border-radius: 8px; 
-  flex-direction: column; 
+  padding: 1rem 0;
+  border-radius: 8px;
+  flex-direction: column;
   gap: 0.8rem;
   display: flex;
+  width: 100%;
 }
+
 .film-description .label {
-  font-weight: bold; 
-  color: #807b7b; 
-  font-size: 1.5rem;
-  padding: 0%;
+  font-weight: bold;
+  color: #807b7b;
+  font-size: 1.2rem;
+  padding: 0;
   margin-right: 0.4rem;
 }
 
-.description p {
-  line-height: 1.1;
-  color: #333; 
-  display: flex;
-  align-items: baseline;
-}
-
-.list-group-item {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
-  transition: background-color 0.3s ease;
-}
-
-.list-group-item:hover {
-  background-color: #e2e6ea;
+.description p,
+.film-description p {
+  line-height: 1.4;
+  color: #333;
+  margin: 0.25rem 0;
 }
 
 .ticket-container {
   display: block;
-  margin-top: 15px; 
+  margin-top: 15px;
 }
 
-/* Conteneur de paiement */
 .payment-container {
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 @media (min-width: 992px) {
+  .col-md-3 {
+    width: 25%;
+    margin-bottom: 0;
+  }
+
   .col-md-6 {
     width: 60%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .seances {
+    margin-left: 1rem;
+    max-width: 800px;
+  }
+
+  .list-group-item {
+    flex: 1 1 calc(40% - 1rem);
+    max-width: calc(40% - 1rem);
+  }
+
+  .film-description .label {
+    font-size: 1.5rem;
+  }
+
+  .imgFilm {
+    margin: 0;
   }
 }
-
-
-
-

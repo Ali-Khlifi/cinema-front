@@ -1,18 +1,20 @@
-
-.custom-navbar{
+.custom-navbar {
   height: 8rem;
   display: flex;
   align-items: center;
-  background-color: #001340
+  background-color: #001340;
 }
-.custom-logo{
+
+.custom-logo {
   height: 7.5rem;
   position: relative;
   margin-top: -3rem;
 }
 
-.navbar-inverse{
-  background-color: #001340
+.navbar-inverse {
+  background-color: #001340;
+  border-color: #001340;
+  margin-bottom: 0;
 }
 
 .navbar-nav {
@@ -23,6 +25,7 @@
   margin-top: 1.5rem;
   background-color: #001340;
 }
+
 .navbar-inverse .navbar-nav > .active > a {
   background-color: #001340;
 }
@@ -46,8 +49,94 @@
   padding-right: 15px;
 }
 
-.navbar-btn, .navbar-btn:hover, .navbar-btn:focus {
+.navbar-btn,
+.navbar-btn:hover,
+.navbar-btn:focus {
   text-decoration: none !important;
   outline: none !important;
 }
 
+.navbar-toggle {
+  display: none;
+  float: right;
+  margin: 1.8rem 1rem 0;
+  padding: 9px 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 4px;
+}
+
+.navbar-toggle .icon-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 4px 0;
+  background-color: #fff;
+}
+
+.app-main {
+  min-height: calc(100vh - 10rem);
+  padding-bottom: 4rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .custom-navbar {
+    height: auto;
+    min-height: 4.5rem;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+  }
+
+  .custom-logo {
+    height: 3.2rem;
+    margin-top: 0;
+  }
+
+  .navbar-toggle {
+    display: block;
+  }
+
+  .navbar-collapse {
+    display: none;
+    width: 100%;
+    clear: both;
+    background-color: #001340;
+    padding: 0 0 1rem;
+  }
+
+  .navbar-collapse.is-open {
+    display: block;
+  }
+
+  .navbar-nav,
+  .navbar-right {
+    display: block;
+    float: none;
+    margin: 0;
+    width: 100%;
+  }
+
+  .navbar-nav > li,
+  .navbar-right > li {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .navbar-nav > li > a,
+  .navbar-text {
+    padding: 12px 16px !important;
+    display: block;
+  }
+
+  .navbar-btn {
+    margin: 8px 16px;
+    width: calc(100% - 32px);
+  }
+
+  .navbar-right {
+    padding-right: 0;
+  }
+}

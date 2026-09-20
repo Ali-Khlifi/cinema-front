@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   title = 'cinema-client';
   isAuthenticated = false;
   userProfile: KeycloakProfile | null = null;
+  menuOpen = false;
 
   constructor(
     private keycloakService: KeycloakService,
