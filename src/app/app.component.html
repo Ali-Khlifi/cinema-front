@@ -20,9 +20,12 @@
     <div class="navbar-collapse" [class.is-open]="menuOpen">
       <ul class="nav navbar-nav">
         <li class="active"><a routerLink="/cinemas" (click)="menuOpen = false">CINÉMAS</a></li>
+        <!-- P0.4 : masqués tant que les pages n'ont pas de données réelles. Routes conservées. -->
+        <!--
         <li class="active"><a routerLink="/films" (click)="menuOpen = false">FILMS</a></li>
         <li class="active"><a routerLink="/evenements" (click)="menuOpen = false">ÉVÉNEMENTS</a></li>
         <li class="active"><a routerLink="/offres" (click)="menuOpen = false">OFFRES</a></li>
+        -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="isAuthenticated && userProfile" class="navbar-text">
