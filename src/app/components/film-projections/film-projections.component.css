@@ -169,3 +169,12 @@
     margin: 0;
   }
 }
+
+.imgFilm-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  color: #666;
+  text-align: center;
+}
