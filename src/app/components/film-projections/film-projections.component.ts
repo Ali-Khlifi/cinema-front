@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { FilmProjectionService } from '../../services/film-projection/film-projection.service';
@@ -18,12 +18,14 @@ import { SeatAvailability } from '../../models/seat-availability.model';
   styleUrls: ['./film-projections.component.css'],
   providers: [DatePipe]
 })
-export class FilmProjectionsComponent implements OnInit {
+export class FilmProjectionsComponent implements OnInit, OnChanges {
   /** Film projection to display */
   @Input() filmProjection!: FilmProjection;
 
-  /** Media/poster image for the film */
-  mediaFilm: any;
+  /** Poster shown for the film. Presigned URL, or the legacy media as a data URL. */
+  mediaFilm?: string;
+
+  private legacyPosterRequested = false;
 
   /** List of available seats for this projection */
   seats: SeatAvailability[] = [];
@@ -50,17 +52,55 @@ export class FilmProjectionsComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['filmProjection'] && this.filmProjection?.film?.id) {
-      this.filmProjectionService.getMediaFilm(this.filmProjection.film.id).subscribe(data => {
-        let read = new FileReader();
-        read.readAsDataURL(data);
-        read.onloadend = () => {
-          this.mediaFilm = read.result;
-        }
-      }, error => {
-        console.log(error);
-      });
+    if (!changes['filmProjection']) {
+      return;
     }
+    this.mediaFilm = undefined;
+    this.legacyPosterRequested = false;
+    const posterUrl = this.filmProjection?.film?.posterUrl;
+    if (posterUrl) {
+      this.mediaFilm = posterUrl;
+      return;
+    }
+    this.loadLegacyPoster();
+  }
+
+  /**
+   * Presigned URLs expire and can fail before a bucket exists.
+   * One failure falls back to the legacy media; a second failure clears the image.
+   */
+  onPosterError(): void {
+    if (this.legacyPosterRequested) {
+      this.mediaFilm = undefined;
+      return;
+    }
+    this.loadLegacyPoster();
+  }
+
+  posterAlt(): string {
+    const title = this.filmProjection?.film?.title || this.filmProjection?.film?.titre;
+    return title ? `Affiche de ${title}` : 'Affiche du film';
+  }
+
+  private loadLegacyPoster(): void {
+    const filmId = this.filmProjection?.film?.id;
+    if (!filmId || this.legacyPosterRequested) {
+      return;
+    }
+    this.legacyPosterRequested = true;
+    this.mediaFilm = undefined;
+    this.filmProjectionService.getMediaFilm(filmId).subscribe({
+      next: (data) => {
+        const read = new FileReader();
+        read.onloadend = () => {
+          this.mediaFilm = typeof read.result === 'string' ? read.result : undefined;
+        };
+        read.readAsDataURL(data);
+      },
+      error: () => {
+        this.mediaFilm = undefined;
+      }
+    });
   }
 
   /**
